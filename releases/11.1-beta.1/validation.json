@@ -2,6 +2,8 @@
   "iso_sha256": "67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e",
   "iso_bytes": 2325436416,
   "usb_full_image_readback_sha256_matched": true,
+  "usb_readback_scope": "Earlier raw image write; separate from the maintainer's Rufus ISO-mode boot test",
+  "physical_boot_rufus_mode": "ISO Image mode",
   "physical_boot": "Maintainer reported successful physical USB live boot on 2026-11-01",
   "desktop": "KDE Plasma Wayland; wallpaper, launcher and selected icons visually checked",
   "lockscreen": "Aika wallpaper and live clock visually checked",

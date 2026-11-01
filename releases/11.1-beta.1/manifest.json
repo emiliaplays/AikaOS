@@ -10,6 +10,7 @@
   "download_host": "SourceForge",
   "download_url": null,
   "source_profile": "profile/",
+  "recommended_rufus_mode": "ISO Image mode",
   "live_locale": "de_DE.UTF-8",
   "live_account": "aika",
   "persistence": false,

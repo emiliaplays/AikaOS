@@ -21,10 +21,12 @@ The ISO is a single file: **2,325,436,416 bytes** (2.33 GB / 2.17 GiB). No split
 1. Download the **ISO** using the SourceForge link above and verify its SHA-256 below.
 2. Download **[Rufus from rufus.ie](https://rufus.ie/en/)** and connect an **8 GB or larger USB drive**.
 3. In Rufus, select the intended USB under **Device**, click **SELECT**, and choose `aikaos-11.1-x86_64-grub.iso`.
-4. Click **START**. If offered an ISO/DD choice, select **DD Image mode**. Writing erases the selected USB drive; check the device carefully.
+4. Click **START**. If offered an ISO/DD choice, select **ISO Image mode (Recommended)**. This is the mode the maintainer used for a successful physical live boot. Writing erases the selected USB drive; check the device carefully.
 5. Wait for **READY**, eject the drive, restart, and select the **UEFI USB** entry in your computer's boot menu. **Secure Boot must be disabled** for this unsigned beta.
 
 See the [full guide](https://github.com/emiliaplays/AikaOS/blob/main/docs/GETTING_STARTED.md) for verification commands and troubleshooting.
+
+If ISO Image mode does not boot on your hardware, verify the ISO checksum and firmware boot selection, then try rewriting the USB in **DD Image mode**.
 
 ```text
 67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e  aikaos-11.1-x86_64-grub.iso

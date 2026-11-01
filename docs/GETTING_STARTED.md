@@ -24,10 +24,12 @@ The ISO is **2,325,436,416 bytes**. A checksum confirms file integrity; this bet
 2. Insert an **8 GB or larger USB drive** and back up anything you need from it.
 3. Open Rufus and select that USB under **Device**. Writing will erase the selected drive.
 4. Under **Boot selection**, choose **Disk or ISO image**, click **SELECT**, and open the AikaOS ISO.
-5. Click **START**. If prompted to choose between ISO and DD mode, select **Write in DD Image mode** to preserve the tested hybrid image and custom GRUB layout.
+5. Click **START**. If prompted to choose between ISO and DD mode, select **Write in ISO Image mode (Recommended)**. The maintainer confirmed a successful physical live boot with Rufus ISO Image mode.
 6. Wait until Rufus reports **READY**, then safely eject the USB.
 
 Do not select a split file, a source archive, or a checksum file in Rufus. The boot image is the `.iso` file. Windows may not recognize the Linux/hybrid partitions after writing; do not format the stick again when Windows offers to do so.
+
+If the USB does not boot on your hardware, verify the downloaded ISO's checksum and the selected firmware boot entry first. You can then rewrite the USB using **DD Image mode** as an alternative; this copies the hybrid image directly and erases the USB again.
 
 References: [Rufus FAQ](https://github.com/pbatard/rufus/wiki/FAQ), [ArchWiki USB installation media](https://wiki.archlinux.org/title/USB_flash_installation_medium).
 

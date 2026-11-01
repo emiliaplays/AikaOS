@@ -19,7 +19,7 @@ AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop, and
 
 ## Download and boot
 
-Get the single ISO from the SourceForge link in the [11.1 Beta 1 release](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1), verify its SHA-256, and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **DD Image mode** if Rufus offers an ISO/DD choice. USB writing erases the selected drive.
+Get the single ISO from the SourceForge link in the [11.1 Beta 1 release](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1), verify its SHA-256, and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **ISO Image mode** if Rufus offers an ISO/DD choice; the maintainer confirmed a successful live boot using this mode. DD Image mode is an alternative if ISO mode fails on your hardware. USB writing erases the selected drive.
 
 Disable Secure Boot for this unsigned beta, then select the UEFI USB entry in your computer's boot menu. See the [step-by-step Rufus guide](docs/GETTING_STARTED.md).
 
