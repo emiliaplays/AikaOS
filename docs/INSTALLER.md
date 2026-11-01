@@ -6,6 +6,7 @@ The `feature/calamares-installer` branch adds an optional offline Calamares inst
 
 - Aika mascot, wallpaper, navy/cyan styling and English/German slideshow.
 - Explicit partition selection and a final installation confirmation.
+- A process-lifetime idle/sleep inhibitor while the installer is open.
 - The compressed root filesystem is read from the attached installation medium; an Internet connection is not required to unpack it.
 - A new normal user, password-based `sudo`, locked root account and SDDM login. Live automatic login and passwordless `sudo` are removed.
 - Installed kernel, regenerated initramfs, Aika GRUB theme, fresh machine identity and per-installation package keyring.
