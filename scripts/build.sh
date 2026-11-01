@@ -21,24 +21,26 @@ root="$work/staging/x86_64/airootfs"
 stage="$work/staging/iso"
 [[ -d "$root/usr" && -d "$stage/arch" ]] || { echo 'Unexpected Archiso staging layout.' >&2; exit 1; }
 
-# Apply the hook explicitly as well, so the recipe does not depend on legacy
-# Archiso automatic customization-hook behavior.
+# Archiso 92 runs and removes the customization hook, then preserves the boot
+# files in the ISO staging tree before clearing the root filesystem's /boot.
+[[ ! -e "$root/root/customize_airootfs.sh" ]] || { echo 'Archiso did not finish the customization hook.' >&2; exit 1; }
+for artifact in arch/x86_64/airootfs.sfs arch/x86_64/airootfs.sha512 arch/boot/x86_64/vmlinuz-linux arch/boot/x86_64/initramfs-linux.img; do
+    [[ -s "$stage/$artifact" ]] || { echo "Missing staged artifact: $artifact" >&2; exit 1; }
+done
+[[ $(stat -c %u:%g "$root/home/aika") == 1000:1000 ]] || { echo 'Incorrect live home ownership.' >&2; exit 1; }
+if [[ -d "$root/etc/pacman.d/gnupg/private-keys-v1.d" ]] &&
+    find "$root/etc/pacman.d/gnupg/private-keys-v1.d" -type f -print -quit | grep -q .; then
+    echo 'A private package-signing key must not be included in the live image.' >&2
+    exit 1
+fi
 mount --bind "$root" "$root"
 trap 'umount "$root" 2>/dev/null || true' EXIT
-arch-chroot "$root" /bin/bash /root/customize_airootfs.sh
-chown -R 1000:1000 "$root/home/aika"
-chmod 750 "$root/etc/sudoers.d"
-chmod 440 "$root/etc/sudoers.d/10-aika-live"
-arch-chroot "$root" pacman --config /dev/null -Q > "$stage/arch/pkglist.x86_64.txt"
 arch-chroot "$root" fastfetch --config /etc/xdg/fastfetch/config.jsonc --pipe > "$out/fastfetch-build-check.txt"
 grep -q 'AikaOS 11.1' "$out/fastfetch-build-check.txt"
-cp "$root/boot/vmlinuz-linux" "$root/boot/initramfs-linux.img" "$stage/arch/boot/x86_64/"
 umount "$root"
 trap - EXIT
 
-mksquashfs "$root" "$stage/arch/x86_64/airootfs.sfs" -noappend -comp zstd -Xcompression-level 4 -b 1M -processors "$(nproc)"
-(cd "$stage/arch/x86_64" && sha512sum airootfs.sfs > airootfs.sha512)
-printf '11.1\n' > "$stage/arch/version"
+(cd "$stage/arch/x86_64" && sha512sum -c airootfs.sha512)
 
 # Keep intermediate boot assets out of the final GRUB-only staging tree.
 mkdir -p "$work/upstream-boot"

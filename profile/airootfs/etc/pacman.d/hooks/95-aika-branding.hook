@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = filesystem
+
+[Action]
+Description = Applying AikaOS distribution artwork...
+When = PostTransaction
+Depends = coreutils
+Exec = /bin/sh /usr/share/aikaos/apply-branding-aliases.sh

@@ -53,11 +53,16 @@ assert len(icons)>=20
 for icon in icons: ET.parse(icon)
 for file in ('usr/share/backgrounds/aikaos/desktop.png','usr/share/backgrounds/aikaos/lockscreen.png','usr/share/pixmaps/aikaos-logo.png'):
     assert (profile/file).stat().st_size>10000
+for name in ('archlinux-logo.svg','archlinux-logo-text.svg','archlinux-logo-text-dark.svg','archlinux-logo.png'):
+    assert not (profile/'usr/share/pixmaps'/name).exists(), 'Package-owned artwork must be applied after pacstrap'
+    assert (profile/'usr/share/aikaos/branding/arch-aliases'/name).is_file()
+assert 'Target = filesystem' in (profile/'etc/pacman.d/hooks/95-aika-branding.hook').read_text()
 
 # Scan tracked files when available, otherwise the prepared checkout. Never
 # traverse ignored build outputs or Git's internal storage.
 if (repo/'.git').exists():
-    paths=[repo/p for p in subprocess.check_output(['git','ls-files'],cwd=repo,text=True).splitlines()]
+    names=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard'],cwd=repo,text=True).splitlines()
+    paths=[repo/p for p in names if (repo/p).exists() or (repo/p).is_symlink()]
 else:
     paths=[p for p in repo.rglob('*') if p.is_file() and not ({'.git','build','out'} & set(p.relative_to(repo).parts))]
 for path in paths:

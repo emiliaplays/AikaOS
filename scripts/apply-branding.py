@@ -26,12 +26,11 @@ for group in ('apps', 'places', 'actions'):
 put('usr/share/icons/Aika/index.theme', '[Icon Theme]\nName=Aika\nComment=AikaOS midnight and cyan icons\nInherits=breeze-dark,breeze,hicolor\nDirectories=scalable/apps,scalable/places,scalable/actions\n\n' + ''.join(f'[scalable/{g}]\nSize=64\nType=Scalable\nMinSize=16\nMaxSize=512\nContext={c}\n\n' for g,c in [('apps','Applications'),('places','Places'),('actions','Actions')]))
 for name in ('aikaos-logo', 'archlinux-logo', 'archlinux', 'arch-linux', 'distributor-logo', 'start-here', 'start-here-kde', 'kde', 'system-logo'):
     (icons / 'apps' / (name + '.svg')).write_text(logo)
-for f in (r / 'usr/share/pixmaps').glob('archlinux-logo*.svg'):
-    f.write_text(logo)
-# Explicit aliases cover package-owned Arch logos when the overlay is applied.
+# Keep package-owned paths out of the initial overlay. The branding hook applies
+# these aliases after filesystem is installed, and reapplies them on upgrades.
 for name in ('archlinux-logo.svg', 'archlinux-logo-text.svg', 'archlinux-logo-text-dark.svg'):
-    put('usr/share/pixmaps/' + name, logo)
-copy('aika-logo-v2.png', 'usr/share/pixmaps/archlinux-logo.png')
+    put('usr/share/aikaos/branding/arch-aliases/' + name, logo)
+copy('aika-logo-v2.png', 'usr/share/aikaos/branding/arch-aliases/archlinux-logo.png')
 
 paths = {
  'folder': ('places', '<path d="M8 19h19l6 7h23v27H8z" fill="#102e4e"/><path d="M8 26h48v27H8z" fill="#174c73"/><path d="M24 34l-5-6v14c0 12 26 12 26 0V28l-5 6"/><path d="M26 42h1m10 0h1"/>'),
