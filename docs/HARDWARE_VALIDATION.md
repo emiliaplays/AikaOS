@@ -52,6 +52,8 @@ One controlled reboot then returned to SSH automatically with the same host key 
 
 After reboot the installation check again passed **24 of 25**, with only the intentional SSH-autostart difference. Ten of eleven extended checks passed. `kwin_responds` was false because the physical seat remained at the SDDM greeter without a logged-in Plasma session. This checkpoint does not claim a successful post-reboot physical desktop login. There were no failed system/user services or coredumps; package database and file checks, DNS, HTTPS, audio graph response and a disposable user-home write/read/fsync test passed.
 
+The maintainer subsequently clarified that the physical desktop also works on this GPU. The monitor had been disconnected, and reconnecting it temporarily failed to restore the display; the maintainer attributes that behavior to the GPU's known hardware problems. Desktop operation is therefore **maintainer-confirmed**, while the earlier SSH checkpoint remains unchanged. The reconnect incident does not establish a general AikaOS desktop failure, and its hardware cause was not independently diagnosed.
+
 ## Remote application smoke tests
 
 After the reboot, the maintainer reported that this GPU no longer produced a physical picture and already had known core problems. The tests therefore used a **separate CPU-rendered X11/Openbox session**, accessed through password-protected, loopback-only TigerVNC and an SSH tunnel. This was not the normal Plasma Wayland session and did not validate the GPU, physical display, screen locking or the complete Plasma desktop.
@@ -76,10 +78,10 @@ The initial boot logged 463 amdgpu `Unsupported screen format RA24` messages in 
 
 The next audited graphical boot had zero RA24 messages, and the controlled-reboot checkpoint also had zero. The latter remained at the greeter, so these counts do not establish a repeatable graphics fix. The only kernel error at those later checkpoints was the old Intel platform's unsupported TDX capability message.
 
-Similar RA24 errors are tracked in the [upstream KDE report](https://bugs.kde.org/show_bug.cgi?id=524476), where developers attribute the reported problem to amdgpu. That report involves different hardware; it does not establish that this test has the identical root cause. The maintainer's report of defective GPU hardware further limits conclusions: a healthy-GPU comparison is still required, and no claim is made that every earlier graphics warning was caused by that defect.
+Similar RA24 errors are tracked in the [upstream KDE report](https://bugs.kde.org/show_bug.cgi?id=524476), where developers attribute the reported problem to amdgpu. That report involves different hardware; it does not establish that this test has the identical root cause. The maintainer's report of defective GPU hardware limits conclusions about the reconnect incident. A healthy-GPU comparison would help isolate the warnings; no claim is made that every earlier graphics warning was caused by that defect.
 
 ## Remaining checks
 
-Installed-disk reboot, package integrity, core services and the separate remote application tests are verified. Normal post-reboot Plasma login, physical graphics and repeat lock/unlock still need testing with a working GPU. Earlier user-confirmed browsing/audio/lock tests remain useful evidence, but do not replace that repeat check.
+Installed-disk reboot, package integrity, core services and the separate remote application tests are verified. Physical desktop operation, browsing, audio and lock/unlock are maintainer-confirmed. Physical monitor reconnect behavior and repeat lock/unlock after the controlled reboot have not been independently retested. The temporary loss of physical output is recorded as a monitor-reconnect incident on reportedly defective hardware, rather than a demonstrated AikaOS desktop failure.
 
 Automatic standby occurred during the initial SSH audit. The subsequent recovery had a different boot ID and therefore does **not** prove successful suspend/resume. Suspend/resume remains unverified. Accelerated virtualization, BIOS installation, dual boot, encryption and recovery also remain untested. The earlier TCG VM graphics failures remain recorded in the [VM report](INSTALLER_VALIDATION.md). This remains a development build, not stable-release approval.
