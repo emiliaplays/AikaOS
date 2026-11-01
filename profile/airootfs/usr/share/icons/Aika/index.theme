@@ -1,0 +1,26 @@
+[Icon Theme]
+Name=Aika
+Comment=AikaOS midnight and cyan icons
+Inherits=breeze-dark,breeze,hicolor
+Directories=scalable/apps,scalable/places,scalable/actions
+
+[scalable/apps]
+Size=64
+Type=Scalable
+MinSize=16
+MaxSize=512
+Context=Applications
+
+[scalable/places]
+Size=64
+Type=Scalable
+MinSize=16
+MaxSize=512
+Context=Places
+
+[scalable/actions]
+Size=64
+Type=Scalable
+MinSize=16
+MaxSize=512
+Context=Actions

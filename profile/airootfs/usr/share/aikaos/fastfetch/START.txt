@@ -1,0 +1,33 @@
+Aika fuer Fastfetch
+
+1. ZIP entpacken und im entpackten Ordner ein Terminal oeffnen.
+2. Starten:
+
+   fastfetch --config ./config.jsonc
+
+Varianten:
+   config.jsonc          Portraet, 54 Spalten / 33 Zeilen
+   config-compact.jsonc  Kleineres Portraet, 40 Spalten / 25 Zeilen
+   config-full.jsonc     Mit winkender Hand, 52 Spalten / 34 Zeilen
+
+Die Konfigurationen enthalten das Logo bereits. Du kannst sie verschieben.
+Das Logo besteht aus ASCII-Zeichen mit ANSI-Farben. Es braucht keine
+Bildunterstuetzung und keinen Nerd Font. Fuer die Farben ein Terminal
+mit Truecolor verwenden.
+
+Vorhandene Konfiguration weiterverwenden:
+   fastfetch --file-raw ./aika.txt
+
+Oder aika.txt nach ~/.config/fastfetch/ kopieren und in der eigenen
+config.jsonc den vorhandenen logo-Eintrag durch diesen ersetzen:
+
+   "logo": {
+     "type": "file-raw",
+     "source": "~/.config/fastfetch/aika.txt",
+     "padding": { "right": 4 }
+   }
+
+aika-compact.txt und aika-full.txt sind die anderen farbigen Logos.
+aika-plain.txt und aika-full-plain.txt enthalten ASCII ohne Farbcodes.
+
+Getestet mit Fastfetch 2.70.0 unter Windows.

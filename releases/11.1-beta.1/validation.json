@@ -1,0 +1,16 @@
+{
+  "iso_sha256": "67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e",
+  "iso_bytes": 2325436416,
+  "usb_full_image_readback_sha256_matched": true,
+  "physical_boot": "Maintainer reported successful physical USB live boot on 2026-11-01",
+  "desktop": "KDE Plasma Wayland; wallpaper, launcher and selected icons visually checked",
+  "lockscreen": "Aika wallpaper and live clock visually checked",
+  "fastfetch": "2.70.0; supplied main configuration verified byte-for-byte; main/compact/full run on Linux; portrait visually checked",
+  "final_emulator_failed_system_units": 0,
+  "final_emulator_failed_user_units": 0,
+  "final_emulator_coredumps": 0,
+  "emulator_overrides": "Software Qt Quick, animations disabled and splash service masked only in the RAM test overlay; not part of the ISO",
+  "earlier_emulator_issue": "Earlier TCG software-rendered test had a KWin/Breeze crash and recovered",
+  "source_splash_override_removed": true,
+  "hardware_coverage": "Limited; one maintainer-reported physical live boot"
+}

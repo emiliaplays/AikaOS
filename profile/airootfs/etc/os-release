@@ -1,0 +1,8 @@
+NAME="AikaOS"
+PRETTY_NAME="AikaOS 11.1"
+ID=aikaos
+ID_LIKE=arch
+VERSION_ID=11.1
+BUILD_ID=live
+ANSI_COLOR="38;2;0;180;255"
+LOGO=aikaos-logo

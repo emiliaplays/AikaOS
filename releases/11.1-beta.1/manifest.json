@@ -1,0 +1,19 @@
+{
+  "version": "11.1",
+  "tag": "v11.1-beta.1",
+  "status": "prerelease",
+  "date": "2026-11-01",
+  "architecture": "x86_64",
+  "filename": "aikaos-11.1-x86_64-grub.iso",
+  "bytes": 2325436416,
+  "sha256": "67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e",
+  "download_host": "SourceForge",
+  "download_url": null,
+  "source_profile": "profile/",
+  "live_locale": "de_DE.UTF-8",
+  "live_account": "aika",
+  "persistence": false,
+  "secure_boot_supported": false,
+  "fastfetch_config_sha256": "7a76b5bb226248b4f36b5dec4d2fbac652825635afb837225e4037a698dbe848",
+  "physical_boot": "Maintainer reported successful physical USB live boot on 2026-11-01"
+}

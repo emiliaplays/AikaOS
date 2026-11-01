@@ -1,0 +1,7 @@
+Mode: built-in image_gen.
+Reference: maintainer-supplied original AikaOS wallpaper (IMG_3608.webp).
+
+Final generation prompt:
+Use case: stylized-concept. Create a new original 16:9 landscape GRUB bootloader background illustration for AikaOS, ideally 1920x1080. Reference image role: character identity and blue-black visual palette only. Preserve the recognizable Aika character: clearly adult anime catgirl, short black bob hair, black cat ears, bright blue eyes, black-and-white gothic maid outfit with modest covered neckline, friendly confident expression. New composition: Aika shown from waist up at the far right third, facing slightly toward the viewer and left, elegant and polished anime artwork, refined cyan rim lighting. Background: deep midnight navy and near-black sci-fi space with subtle cyan luminous arcs and delicate geometric shards concentrated at bottom and right. LEFT 60 PERCENT MUST BE ALMOST EMPTY VERY DARK NAVY with very low contrast, so real GRUB menu text placed later stays easily readable. Upper-left small restrained exact wordmark 'AikaOS' in white with cyan accent, placed at x~8%, y~15%; no other text whatsoever. No menu items, no fake UI, no buttons, no watermarks. Restrained professional OS boot screen aesthetic, crisp artwork, clean negative space. This is a dedicated bootloader background, distinct from the original desktop wallpaper. Fully opaque background.
+
+Output: generated PNG preserved as aika-grub.png; resized to 1920x1080 RGB PNG as background.png for GRUB compatibility.

@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a reproducible AikaOS beta issue
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Release version
+      placeholder: 11.1 Beta 1
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and boot setup
+      description: CPU, GPU, firmware boot mode, Secure Boot state, and Rufus write mode. Omit serial numbers.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Checksum, logs or screenshots
+      description: Include the ISO SHA-256 and exact errors. Remove secrets and private information.
