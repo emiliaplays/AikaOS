@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — installer development
+
+- Fixed clean Archiso builds, package-owned artwork collisions and handling of Archiso's staged boot files.
+- Added a pinned Calamares 3.4.3 package recipe and native Arch CI package build.
+- Added an optional Aika-themed offline installer, guarded target configuration and installed-user defaults.
+- Added upstream configuration-schema checks and invalid-target regression checks.
+- Added a separate development ISO workflow; the published beta image is unchanged.
+
 ## 11.1 Beta 1 — 2026-11-01
 
 First public beta of the tested AikaOS 11.1 live image.
