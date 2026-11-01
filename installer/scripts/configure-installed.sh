@@ -19,6 +19,8 @@ prepare)
         /etc/ssh/sshd_config.d/10-archiso.conf \
         /etc/mkinitcpio.conf.d/archiso.conf /root/.automated_script.sh /root/.zlogin
     usermod --lock root
+    # The live login hint is incorrect once password-protected users exist.
+    printf 'Welcome to AikaOS.\n' > /etc/motd
 
     # These tools belong to the live image. All removal is offline.
     remove_packages=()
