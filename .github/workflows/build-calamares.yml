@@ -1,0 +1,41 @@
+name: Build Calamares package
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/calamares-installer]
+    paths:
+      - packages/calamares/**
+      - .github/workflows/build-calamares.yml
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install official Arch build dependencies
+        run: |
+          pacman -Syu --noconfirm --needed cmake extra-cmake-modules ninja qt6-tools qt6-translations kcoreaddons kpmcore libpwquality polkit-qt6 python qt6-declarative qt6-svg qt6-wayland yaml-cpp rsync squashfs-tools parted gptfdisk dosfstools e2fsprogs efibootmgr grub mkinitcpio
+      - name: Build the pinned upstream source as an unprivileged user
+        run: |
+          useradd --create-home builder
+          cp -a packages/calamares /home/builder/calamares
+          chown -R builder:builder /home/builder/calamares
+          su builder -c 'cd /home/builder/calamares && export MAKEFLAGS="-j$(nproc)" CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)" && makepkg --noconfirm'
+          mkdir -p out/calamares
+          cp /home/builder/calamares/*.pkg.tar.zst out/calamares/
+          cd out/calamares
+          sha256sum *.pkg.tar.zst > SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: calamares-x86_64
+          path: out/calamares/
+          compression-level: 0
+          retention-days: 1

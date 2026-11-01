@@ -1,0 +1,37 @@
+# AikaOS packaging for the official Calamares release.
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Dependency references: AUR calamares (contributor Rustmilian) and upstream CMake.
+pkgname=calamares
+pkgver=3.4.3
+pkgrel=1
+pkgdesc='Distribution-independent installer framework for the AikaOS live image'
+arch=('x86_64')
+url='https://codeberg.org/Calamares/calamares'
+license=('GPL-3.0-or-later')
+depends=('kcoreaddons' 'kpmcore' 'libpwquality' 'polkit-qt6' 'python' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'yaml-cpp' 'rsync' 'squashfs-tools' 'parted' 'gptfdisk' 'dosfstools' 'e2fsprogs' 'efibootmgr' 'grub' 'mkinitcpio')
+makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'qt6-tools' 'qt6-translations')
+source=("calamares-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('78784e6018097e4fe74cbd8f1530929626dcecfe303e14383bc8c074feb34eec')
+options=('!debug')
+
+build() {
+    local keep=' bootloader displaymanager finished fstab hwclock initcpio initcpiocfg keyboard locale localecfg machineid mount networkcfg partition removeuser services-systemd shellprocess summary umount unpackfs users welcome '
+    local skip=() directory name
+    for directory in "$srcdir/calamares/src/modules/"*/; do
+        name=${directory%/}; name=${name##*/}
+        [[ $keep == *" $name "* ]] || skip+=("$name")
+    done
+    cmake -S "$srcdir/calamares" -B build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib \
+        -DWITH_QT6=ON -DINSTALL_CONFIG=ON \
+        -DBUILD_TESTING=OFF -DBUILD_SCHEMA_TESTING=OFF \
+        -DBUILD_CRASH_REPORTING=OFF -DSKIP_MODULES="${skip[*]}"
+    cmake --build build
+}
+
+package() {
+    DESTDIR="$pkgdir" cmake --install build
+    # The live image provides one explicitly named AikaOS installer launcher.
+    rm -f "$pkgdir/usr/share/applications/calamares.desktop"
+}
