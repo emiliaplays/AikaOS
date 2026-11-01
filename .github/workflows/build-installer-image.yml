@@ -28,7 +28,7 @@ jobs:
           docker run --rm --privileged \
             -v "$GITHUB_WORKSPACE:/workspace" -w /workspace \
             archlinux:base-devel bash -euc '
-              pacman -Syu --noconfirm --needed archiso grub libisoburn squashfs-tools mtools dosfstools ttf-dejavu python python-yaml python-jsonschema git cmake extra-cmake-modules ninja qt6-tools qt6-translations kcoreaddons kpmcore libpwquality polkit-qt6 qt6-declarative qt6-svg qt6-wayland yaml-cpp rsync parted gptfdisk e2fsprogs efibootmgr mkinitcpio os-prober
+              pacman -Syu --noconfirm --needed archiso grub libisoburn squashfs-tools mtools dosfstools ttf-dejavu python python-yaml python-jsonschema git cmake extra-cmake-modules ninja qt6-tools qt6-translations kcoreaddons kpmcore libpwquality polkit-qt6 qt6-declarative qt6-svg qt6-wayland yaml-cpp rsync parted gptfdisk e2fsprogs efibootmgr mkinitcpio os-prober perl xkeyboard-config
               git config --global --add safe.directory /workspace
               python3 tests/test-installer-guard.py
               useradd --create-home builder

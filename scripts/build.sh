@@ -51,6 +51,10 @@ mount --bind "$root" "$root"
 trap 'umount "$root" 2>/dev/null || true' EXIT
 arch-chroot "$root" fastfetch --config /etc/xdg/fastfetch/config.jsonc --pipe > "$out/fastfetch-build-check.txt"
 grep -q 'AikaOS 11.1' "$out/fastfetch-build-check.txt"
+if [[ $installer == 1 ]]; then
+    arch-chroot "$root" ckbcomp -model pc106 -layout de -compact > "$out/keyboard-preview-build-check.txt"
+    grep -Eq '^keycode[[:space:]]+[0-9]+' "$out/keyboard-preview-build-check.txt"
+fi
 umount "$root"
 trap - EXIT
 
