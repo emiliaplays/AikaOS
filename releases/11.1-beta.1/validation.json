@@ -1,6 +1,7 @@
 {
   "iso_sha256": "67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e",
   "iso_bytes": 2325436416,
+  "sourceforge_upload_sha256_matched": true,
   "usb_full_image_readback_sha256_matched": true,
   "usb_readback_scope": "Earlier raw image write; separate from the maintainer's Rufus ISO-mode boot test",
   "physical_boot_rufus_mode": "ISO Image mode",

@@ -3,7 +3,7 @@
 <h1 align="center">AikaOS</h1>
 <p align="center"><strong>An Arch-based KDE Plasma live system with an Aika identity.</strong></p>
 <p align="center">11.1 Beta 1 · x86_64 · KDE Plasma · Custom GRUB · Fastfetch</p>
-<p align="center"><a href="https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1">Download & release notes</a> · <a href="docs/GETTING_STARTED.md">Create a USB with Rufus</a> · <a href="docs/BUILDING.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
+<p align="center"><a href="https://sourceforge.net/projects/aikaos/files/11.1-beta.1/aikaos-11.1-x86_64-grub.iso/download">Download ISO</a> · <a href="https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1">Release notes</a> · <a href="docs/GETTING_STARTED.md">Create a USB with Rufus</a> · <a href="docs/BUILDING.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
 
 ![AikaOS desktop](docs/screenshots/desktop.png)
 

@@ -5,6 +5,7 @@
 - Version: **11.1 Beta 1**, x86_64.
 - ISO size: **2,325,436,416 bytes**.
 - SHA-256: `67e9a02edabc58ee082d68838499a51f7f62ecb57fc9cd4b00be749b993d405e`.
+- SourceForge's server-reported SHA-256 after upload matched the local ISO exactly.
 - A raw image write was checked by reading the complete written ISO range back from the USB and matching its SHA-256.
 - Maintainer reported a successful physical USB live boot on **2026-11-01**, and confirmed using **Rufus ISO Image mode** to prepare the bootable USB.
 
