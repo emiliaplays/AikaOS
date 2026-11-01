@@ -7,6 +7,8 @@
 - Added an optional Aika-themed offline installer, guarded target configuration and installed-user defaults.
 - Added upstream configuration-schema checks and invalid-target regression checks.
 - Added a separate development ISO workflow; the published beta image is unchanged.
+- Completed an offline UEFI VM installation, password login and signed-package update/branding checks; recorded remaining TCG graphics failures separately.
+- Added German keyboard previews, readable dark partition labels, installer sleep inhibition and removal of the live login hint from installed systems.
 
 ## 11.1 Beta 1 — 2026-11-01
 

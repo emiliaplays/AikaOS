@@ -53,6 +53,8 @@ This is a live beta with an intentionally open live account. It is intended for 
 
 The repository contains the live profile, artwork, selected icons, Fastfetch configurations, and a [reference build procedure](docs/BUILDING.md). Build in an Arch Linux environment; the ISO is a release download, not a Git blob.
 
+An Aika-themed offline Calamares installer is being developed on `feature/calamares-installer`. Its first complete UEFI VM installation and installed-disk boot succeeded. See the [installer build guide](docs/INSTALLER.md) and [development test results](docs/INSTALLER_VALIDATION.md), including remaining graphics issues. This does not change the live-only installer scope of the published Beta 1 image.
+
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for useful bug reports and changes. For security concerns, see [SECURITY.md](SECURITY.md).
 
 ## Credits and licensing
