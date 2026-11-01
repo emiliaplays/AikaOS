@@ -6,6 +6,7 @@ repo="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 work="$repo/out/package-build/calamares"
 mkdir -p "$work" "$repo/out/localrepo"
 cp "$repo/packages/calamares/PKGBUILD" "$work/PKGBUILD"
+cp "$repo/packages/calamares/"*.patch "$work/"
 (cd "$work"; makepkg --cleanbuild --force --noconfirm)
 packages=("$work/"calamares-*-x86_64.pkg.tar.zst)
 [[ -f ${packages[0]} && ${#packages[@]} == 1 ]] || { echo 'Expected one Calamares package.' >&2; exit 1; }

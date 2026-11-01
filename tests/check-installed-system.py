@@ -27,6 +27,8 @@ def command(*argv):
 checks['installation_complete'] = Path('/var/lib/aikaos/installation-state').read_text().strip() == 'complete'
 checks['installed_disk_boot'] = 'archisobasedir=' not in Path('/proc/cmdline').read_text()
 checks['root_locked'] = command('passwd', '-S', 'root')['stdout'].split()[1] == 'L'
+checks['user_password_set'] = command('passwd', '-S', args.user)['stdout'].split()[1] == 'P'
+checks['sudo_requires_authentication'] = command('runuser', '-u', args.user, '--', 'sudo', '-n', '-k', 'true')['exit'] != 0
 checks['single_normal_user'] = [p.pw_name for p in pwd.getpwall() if 1000 <= p.pw_uid < 65534] == [args.user]
 checks['user_home_private'] = Path(account.pw_dir).stat().st_mode & 0o777 == 0o700
 checks['sddm_avatar_present'] = Path(f'/usr/share/sddm/faces/{args.user}.face.icon').is_file()
@@ -55,11 +57,13 @@ user_env = ['runuser', '-u', args.user, '--', 'env', f'XDG_RUNTIME_DIR=/run/user
 user_failed = command(*user_env, 'systemctl', '--user', '--failed', '--plain', '--no-legend')
 checks['no_failed_system_services'] = system_failed['exit'] == 0 and not system_failed['stdout']
 checks['no_failed_user_services'] = user_failed['exit'] == 0 and not user_failed['stdout']
+cores = command('coredumpctl', '--no-pager', '--no-legend', 'list')
+checks['no_coredumps'] = cores['exit'] in (0, 1) and not cores['stdout']
 report = {
     'checks': checks,
     'system_failed': system_failed,
     'user_failed': user_failed,
-    'coredumps': command('coredumpctl', '--no-pager', 'list'),
+    'coredumps': cores,
     'root_mount': command('findmnt', '-n', '-o', 'SOURCE,FSTYPE', '/'),
     'kernel': os.uname().release,
     'machine_id': Path('/etc/machine-id').read_text().strip(),

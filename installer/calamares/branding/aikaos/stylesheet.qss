@@ -29,6 +29,9 @@ QPushButton:hover { background-color: #244d6d; border-color: #50caff; }
 QPushButton:default { background-color: #50caff; color: #061321; border-color: #50caff; }
 QPushButton:default:hover { background-color: #8cddff; }
 QPushButton:disabled { background-color: #142639; color: #8094aa; border-color: #2b4056; }
+QPushButton:focus, QLineEdit:focus, QComboBox:focus, QListView:focus, QTreeView:focus {
+    border: 2px solid #50caff;
+}
 QCheckBox, QRadioButton { spacing: 8px; }
 QGroupBox { border: 1px solid #35506b; border-radius: 6px; margin-top: 12px; padding-top: 10px; }
 QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 4px; }

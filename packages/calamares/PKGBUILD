@@ -3,7 +3,7 @@
 # Dependency references: AUR calamares (contributor Rustmilian) and upstream CMake.
 pkgname=calamares
 pkgver=3.4.3
-pkgrel=3
+pkgrel=4
 pkgdesc='Distribution-independent installer framework for the AikaOS live image'
 arch=('x86_64')
 url='https://codeberg.org/Calamares/calamares'
@@ -11,10 +11,17 @@ license=('GPL-3.0-or-later' 'GPL-2.0-or-later')
 depends=('kcoreaddons' 'kpmcore' 'libpwquality' 'polkit-qt6' 'python' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'yaml-cpp' 'rsync' 'squashfs-tools' 'parted' 'gptfdisk' 'dosfstools' 'e2fsprogs' 'efibootmgr' 'grub' 'mkinitcpio' 'os-prober' 'perl' 'xkeyboard-config')
 makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'qt6-tools' 'qt6-translations')
 source=("calamares-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
-        'https://deb.debian.org/debian/pool/main/c/console-setup/console-setup_1.249.tar.xz')
+        'https://deb.debian.org/debian/pool/main/c/console-setup/console-setup_1.249.tar.xz'
+        'respect-partition-label-palette.patch')
 sha256sums=('78784e6018097e4fe74cbd8f1530929626dcecfe303e14383bc8c074feb34eec'
-            '2042e268b085ad900f2f9863715d67fadb95b8994554f10d407fc14f224b73ae')
+            '2042e268b085ad900f2f9863715d67fadb95b8994554f10d407fc14f224b73ae'
+            '5dbee6382c5d512e52f4b8a263c9f815507d1e97672764c40ca6cbf6817a5059')
 options=('!debug')
+
+prepare() {
+    # Use the Qt palette for labels instead of assuming a light background.
+    patch -d "$srcdir/calamares" -Np1 -i "$srcdir/respect-partition-label-palette.patch"
+}
 
 build() {
     local keep=' bootloader displaymanager finished fstab hwclock initcpio initcpiocfg keyboard locale localecfg machineid mount networkcfg partition removeuser services-systemd shellprocess summary umount unpackfs users welcome '

@@ -19,6 +19,8 @@ Presentation {
     function onActivate() { currentSlide = 0; german = Qt.locale().name.indexOf("de") === 0 }
     function onLeave() {}
 
+    Rectangle { anchors.fill: parent; color: "#071424"; z: -1 }
+
     Timer {
         interval: 9000
         running: presentation.activatedInCalamares
@@ -29,6 +31,10 @@ Presentation {
     Repeater {
         model: 3
         Slide {
+            x: 0
+            y: 0
+            width: parent.width
+            height: parent.height
             Rectangle { anchors.fill: parent; color: "#071424" }
             Image { anchors.fill: parent; source: "wallpaper.png"; fillMode: Image.PreserveAspectCrop }
             Rectangle { anchors.fill: parent; color: "#071424"; opacity: 0.37 }

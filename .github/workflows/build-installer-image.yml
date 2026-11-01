@@ -46,5 +46,6 @@ jobs:
             out/aikaos-11.1-installer-dev-x86_64.iso.sha256
             out/boot-report.txt
             out/fastfetch-build-check.txt
+            out/keyboard-preview-build-check.txt
           compression-level: 0
           retention-days: 1

@@ -89,6 +89,10 @@ theme = root / 'usr/share/grub/themes/aikaos'
 theme.mkdir(parents=True, exist_ok=True)
 for name in ('background.png', 'theme.txt'):
     shutil.copy2(repo / 'assets/grub' / name, theme / name)
+(theme / 'theme.txt').write_text(
+    (theme / 'theme.txt').read_text().replace('KDE PLASMA  /  LIVE SYSTEM', 'KDE PLASMA  /  AIKAOS'),
+    encoding='utf-8',
+)
 for size in (18, 24):
     subprocess.run(['grub-mkfont', '-s', str(size), '-o', str(theme / f'aika{size}.pf2'), '/usr/share/fonts/TTF/DejaVuSans.ttf'], check=True)
 
