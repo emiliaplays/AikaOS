@@ -6,6 +6,11 @@ import subprocess
 import libcalamares
 
 
+def pretty_name():
+    languages = libcalamares.utils.gettext_languages() or ['en']
+    return 'AikaOS wird eingerichtet' if languages[0].startswith('de') else 'Configuring AikaOS'
+
+
 def run():
     target = Path(libcalamares.globalstorage.value('rootMountPoint') or '/')
     phase = libcalamares.job.configuration.get('phase')
