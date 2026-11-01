@@ -12,7 +12,8 @@ The complete fresh rebuild then passed, including package installation, initramf
 | --- | ---: | --- |
 | Clean baseline rebuild | 2,315,489,280 | `b1033593bf618a4d4e46ae459cf18c0429a2f193ff0b24986c10917312168e27` |
 | First installer development build (`071b04a`) | 2,313,517,056 | `68d9bba0329954dc6f8eb745d7809f817c2cb128470d83e050bd001e5d43a0a4` |
-| Final development build (`bba059b`) | 2,313,582,592 | `c8a4d93ac0e1d50baef59aeef389f9397d9b67424d8168e36ae866262a0b47c4` |
+| Banner-corrected development build (`bba059b`) | 2,313,582,592 | `c8a4d93ac0e1d50baef59aeef389f9397d9b67424d8168e36ae866262a0b47c4` |
+| Microcode-corrected development build (`da8120f`) | 2,328,059,904 | `d2f0abcf3396ebc8e6ce8d3817f703b1e0c30dac1f036622a50fd6abb5effe3b` |
 
 The baseline ISO booted through its own UEFI/GRUB path into KDE Plasma Wayland without graphics overrides. Fastfetch's supplied configuration hash matched the source, the Arch-logo PNG alias matched the Aika logo, HTTPS connectivity worked, and no system services failed. The initial run had no coredumps, but KRunner and KSplash exceeded their startup timeouts under TCG emulation. KRunner subsequently started successfully with its unchanged timeout.
 
@@ -73,7 +74,7 @@ The post-update reboot again reached SDDM and the installed Plasma session. This
 
 The installed login banners still contained live-session text. Source commits `9dda435` and `bba059b` replace `/etc/motd` and `/etc/issue` during installation. The exact replacement commands were applied to the existing disposable test installation and the two added banner checks passed. This is a targeted correction test, not another full installation. After that correction, the expanded fixture check passed 22 of 24 checks: KSplash and the retained earlier coredump were the two failures. The VM-only graphics environment file was removed before shutdown; it is not shipped.
 
-Physical-hardware installation, accelerated virtualization, BIOS installation, dual boot, encryption and recovery remain untested. A successful physical live boot was subsequently reported below. The first stable release requires investigating the graphics issues and testing its advertised installation paths on physical hardware. Untested modes must remain explicitly unsupported.
+At this VM checkpoint, physical-hardware installation was untested. A subsequent installed-system hardware audit, repair, controlled reboot and separate software-rendered application tests are now documented in the [hardware validation report](HARDWARE_VALIDATION.md). Accelerated virtualization, BIOS installation, dual boot, encryption and recovery remain untested. The first stable release requires investigating the graphics issues and testing its advertised installation paths. Untested modes must remain explicitly unsupported.
 
 ## UI and launcher regression pass
 
@@ -99,8 +100,8 @@ On 2026-11-01, the maintainer reported that the development image booted on phys
 - AMD Ryzen 5 1600 and AMD Radeon RX 480
 - Approximately 24 GiB RAM (23.38 GiB reported usable)
 
-Fastfetch shows an overlay root and `/run/archiso/bootmnt`, identifying this as a live session. The exact ISO checksum was not recorded with this report. This is evidence of a successful physical live boot; hardware installation, installed-disk boot and lock/unlock behavior still need their own checks. The earlier VM failures remain recorded and are not treated as resolved by this boot report.
+Fastfetch shows an overlay root and `/run/archiso/bootmnt`, identifying this as a live session. The exact ISO checksum was not recorded with this report. This is evidence of a successful physical live boot. Later installed-disk checks used a separate Intel/RX 580 test PC; see the [hardware validation report](HARDWARE_VALIDATION.md) for those results and the reported GPU fault. The earlier VM failures remain recorded and are not treated as resolved by the live boot report.
 
 ## Result
 
-Clean builds, the basic offline UEFI VM installation path, installed-disk boot, account policy, branding preservation and the installer UI checks are verified. A successful physical live boot is now also reported. **This remains a development build:** hardware installation and lock/unlock validation are outstanding, and the VM graphics failures need comparison and investigation before a full release is advertised.
+Clean builds, the basic offline UEFI VM installation path, installed-disk boot, account policy, branding preservation and the installer UI checks are verified. Physical live boot and subsequent installed-system checks are documented separately. The hardware audit found missing package-owned microcode images; commit `da8120f` corrects their preservation/restoration and its new ISO payload passed targeted offline-copy verification. **This remains a development build:** the corrected ISO still needs a fresh full installation, physical graphics need repeat testing with a healthy GPU, and the VM graphics failures remain unresolved.
