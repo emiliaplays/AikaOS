@@ -14,6 +14,20 @@ done
 python3 "$repo/scripts/validate.py"
 mkdir -p "$work/profile" "$work/intermediate" "$out"
 cp -a "$repo/profile/." "$work/profile/"
+installer=${AIKAOS_INSTALLER:-0}
+[[ $installer == 0 || $installer == 1 ]] || { echo 'AIKAOS_INSTALLER must be 0 or 1.' >&2; exit 1; }
+if [[ $installer == 1 ]]; then
+    command -v repo-add >/dev/null
+    shopt -s nullglob
+    local_packages=("$out/localrepo/"calamares-*.pkg.tar.zst)
+    ((${#local_packages[@]} == 1)) || { echo 'Build or download one Calamares package into out/localrepo/ first.' >&2; exit 1; }
+    [[ $(pacman -Qp "${local_packages[0]}" | cut -d ' ' -f 1) == calamares ]] || { echo 'Unexpected local package.' >&2; exit 1; }
+    repo-add -q "$out/localrepo/aikaos-build.db.tar.gz" "${local_packages[@]}"
+    python3 "$repo/scripts/prepare-installer-profile.py" --profile "$work/profile"
+    # This repository contains only our locally built installer package. The
+    # normal Arch repository signature policy remains unchanged.
+    printf '\n[aikaos-build]\nSigLevel = Optional TrustedOnly\nServer = file://%s\n' "$out/localrepo" >> "$work/profile/pacman.conf"
+fi
 
 # Archiso supplies the package installation, root filesystem and staged boot files.
 mkarchiso -v -w "$work/staging" -o "$work/intermediate" "$work/profile"
@@ -56,9 +70,13 @@ grub-mkfont -s 18 -o "$theme/aika18.pf2" /usr/share/fonts/TTF/DejaVuSans.ttf
 grub-mkfont -s 24 -o "$theme/aika24.pf2" /usr/share/fonts/TTF/DejaVuSans.ttf
 cp /usr/share/grub/unicode.pf2 "$stage/boot/grub/fonts/"
 cp "$repo/assets/grub/grub.cfg" "$stage/boot/grub/grub.cfg"
+if [[ $installer == 1 ]]; then
+    sed -i 's/archisobasedir=arch/archisobasedir=arch copytoram=n/' "$stage/boot/grub/grub.cfg"
+fi
 grub-script-check "$stage/boot/grub/grub.cfg"
 
 iso="$out/aikaos-11.1-x86_64-grub.iso"
+[[ $installer == 0 ]] || iso="$out/aikaos-11.1-installer-dev-x86_64.iso"
 grub-mkrescue -o "$iso" "$stage" -volid AIKAOS_11
 (cd "$out" && sha256sum "$(basename "$iso")" > "$(basename "$iso").sha256")
 xorriso -indev "$iso" -report_el_torito plain -report_system_area plain > "$out/boot-report.txt" 2>&1

@@ -1,0 +1,6 @@
+---
+type: job
+interface: python
+name: aikaos
+script: main.py
+requiredModules: [partition, mount, unpackfs]
