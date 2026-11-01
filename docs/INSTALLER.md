@@ -19,6 +19,8 @@ Calamares **3.4.3** is built from its official Codeberg source archive, pinned b
 
 The package also includes the standalone `ckbcomp` keyboard-preview helper from Debian console-setup **1.249**, pinned to the official Debian source archive and its SHA-256. Its GPL-2.0-or-later copyright notice is included separately. Debian's console configuration is not installed. The ISO build checks that the helper generates a German keymap.
 
+A small tracked patch makes the partition labels follow the Qt text palette instead of using black on the dark Aika background. The patch is included alongside the package recipe and checked by SHA-256.
+
 ## Build on Arch Linux
 
 Use a Linux checkout with symbolic links and executable modes preserved. Install the normal ISO build dependencies described in [BUILDING.md](BUILDING.md), plus the package's `depends` and `makedepends` from its PKGBUILD. `python-yaml` and `python-jsonschema` are required for configuration validation.
