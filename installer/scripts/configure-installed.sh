@@ -21,6 +21,7 @@ prepare)
     usermod --lock root
     # The live login hint is incorrect once password-protected users exist.
     printf 'Welcome to AikaOS.\n' > /etc/motd
+    printf 'AikaOS - KDE Plasma\n' > /etc/issue
 
     # These tools belong to the live image. All removal is offline.
     remove_packages=()

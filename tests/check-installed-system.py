@@ -39,6 +39,7 @@ checks['live_defaults_removed'] = not any(Path(p).exists() for p in (
     '/etc/systemd/journald.conf.d/volatile-storage.conf',
 ))
 checks['live_login_hint_removed'] = 'Live' not in Path('/etc/motd').read_text() and 'sudo ohne Passwort' not in Path('/etc/motd').read_text()
+checks['installed_console_banner'] = 'Live' not in Path('/etc/issue').read_text() and 'AikaOS' in Path('/etc/issue').read_text()
 checks['installer_removed'] = command('pacman', '-Q', 'calamares')['exit'] != 0 and not Path('/usr/local/bin/install-aikaos').exists()
 checks['boot_files_present'] = all(Path(p).is_file() and Path(p).stat().st_size > 0 for p in (
     '/boot/vmlinuz-linux', '/boot/initramfs-linux.img', '/boot/grub/grub.cfg',
