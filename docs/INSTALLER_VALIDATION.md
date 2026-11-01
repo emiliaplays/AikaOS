@@ -73,7 +73,7 @@ The post-update reboot again reached SDDM and the installed Plasma session. This
 
 The installed login banners still contained live-session text. Source commits `9dda435` and `bba059b` replace `/etc/motd` and `/etc/issue` during installation. The exact replacement commands were applied to the existing disposable test installation and the two added banner checks passed. This is a targeted correction test, not another full installation. After that correction, the expanded fixture check passed 22 of 24 checks: KSplash and the retained earlier coredump were the two failures. The VM-only graphics environment file was removed before shutdown; it is not shipped.
 
-Physical hardware, accelerated virtualization, BIOS installation, dual boot, encryption and recovery remain untested. The first stable release requires resolving these graphics issues and testing its advertised installation paths on physical hardware. Untested modes must remain explicitly unsupported.
+Physical-hardware installation, accelerated virtualization, BIOS installation, dual boot, encryption and recovery remain untested. A successful physical live boot was subsequently reported below. The first stable release requires investigating the graphics issues and testing its advertised installation paths on physical hardware. Untested modes must remain explicitly unsupported.
 
 ## UI and launcher regression pass
 
@@ -91,6 +91,16 @@ The revised slideshow rendered with a fully dark background, readable text and t
 
 ![Slideshow appearance in the explicitly labelled UI-only preview](screenshots/installer-slideshow-preview.png)
 
+## Physical hardware live boot — maintainer report
+
+On 2026-11-01, the maintainer reported that the development image booted on physical hardware without problems. The supplied photograph shows AikaOS 11.1 Development running KDE Plasma 6.8.2 / KWin Wayland and the custom Fastfetch portrait on:
+
+- HP OMEN Desktop PC 880-p0xx
+- AMD Ryzen 5 1600 and AMD Radeon RX 480
+- Approximately 24 GiB RAM (23.38 GiB reported usable)
+
+Fastfetch shows an overlay root and `/run/archiso/bootmnt`, identifying this as a live session. The exact ISO checksum was not recorded with this report. This is evidence of a successful physical live boot; hardware installation, installed-disk boot and lock/unlock behavior still need their own checks. The earlier VM failures remain recorded and are not treated as resolved by this boot report.
+
 ## Result
 
-Clean builds, the basic offline UEFI installation path, installed-disk boot, account policy, branding preservation and the installer UI checks are verified. **Stable-release approval is withheld** because the unmodified TCG desktop had startup/lock-screen problems and the software-rendering fixture did not provide a clean visual unlock experience. These failures must be compared on accelerated virtualization or physical hardware and resolved before a full release is advertised.
+Clean builds, the basic offline UEFI VM installation path, installed-disk boot, account policy, branding preservation and the installer UI checks are verified. A successful physical live boot is now also reported. **This remains a development build:** hardware installation and lock/unlock validation are outstanding, and the VM graphics failures need comparison and investigation before a full release is advertised.
