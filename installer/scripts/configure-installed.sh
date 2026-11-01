@@ -35,6 +35,10 @@ prepare)
     mapfile -t kernels < <(find /usr/lib/modules -mindepth 2 -maxdepth 2 -name vmlinuz -type f)
     ((${#kernels[@]} == 1)) || { echo 'Expected exactly one installed Linux kernel.' >&2; exit 1; }
     install -m 0644 "${kernels[0]}" /boot/vmlinuz-linux
+    (cd /usr/share/aikaos/boot && sha256sum -c SHA256SUMS)
+    for vendor in amd intel; do
+        install -m 0644 "/usr/share/aikaos/boot/$vendor-ucode.img" "/boot/$vendor-ucode.img"
+    done
     install -d /etc/mkinitcpio.d
     cat > /etc/mkinitcpio.d/linux.preset <<'EOF'
 ALL_kver="/boot/vmlinuz-linux"
@@ -72,6 +76,8 @@ finalize)
     test -s /boot/vmlinuz-linux
     test -s /boot/initramfs-linux.img
     test -s /boot/grub/grub.cfg
+    test -s /boot/amd-ucode.img
+    test -s /boot/intel-ucode.img
     # SDDM cannot read an avatar inside a private (0700) home directory.
     install -d -m 0755 /usr/share/sddm/faces
     while IFS=: read -r account _ uid _; do

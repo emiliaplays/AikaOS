@@ -44,6 +44,9 @@ checks['installer_removed'] = command('pacman', '-Q', 'calamares')['exit'] != 0 
 checks['boot_files_present'] = all(Path(p).is_file() and Path(p).stat().st_size > 0 for p in (
     '/boot/vmlinuz-linux', '/boot/initramfs-linux.img', '/boot/grub/grub.cfg',
 ))
+checks['microcode_images_present'] = all(Path(p).is_file() and Path(p).stat().st_size > 0 for p in (
+    '/boot/amd-ucode.img', '/boot/intel-ucode.img',
+))
 checks['grub_aika_theme'] = 'GRUB_THEME="/usr/share/grub/themes/aikaos/theme.txt"' in Path('/etc/default/grub').read_text()
 checks['aika_identity'] = 'ID=aikaos' in Path('/etc/os-release').read_text()
 checks['fastfetch_config_preserved'] = hashlib.sha256(Path('/etc/xdg/fastfetch/config.jsonc').read_bytes()).hexdigest() == '7a76b5bb226248b4f36b5dec4d2fbac652825635afb837225e4037a698dbe848'

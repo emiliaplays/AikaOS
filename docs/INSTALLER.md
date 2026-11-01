@@ -10,6 +10,7 @@ The `feature/calamares-installer` branch adds an optional offline Calamares inst
 - The compressed root filesystem is read from the attached installation medium; an Internet connection is not required to unpack it.
 - A new normal user, password-based `sudo`, locked root account and SDDM login. Live automatic login and passwordless `sudo` are removed.
 - Installed kernel, regenerated initramfs, Aika GRUB theme, fresh machine identity and per-installation package keyring.
+- Package-provided AMD/Intel microcode images preserved before Archiso clears `/boot` and restored during offline installation. The normal mkinitcpio microcode hook also embeds the relevant firmware in the initramfs.
 - The installer and live-only setup tools are removed from the installed system.
 
 The Aika setup module checks that Calamares has a mounted block-device target and runs its setup script inside that target's chroot. It refuses `/` and invalid targets. This guard complements Calamares' partition confirmation; it is not a substitute for backups or disk selection.

@@ -47,5 +47,6 @@ jobs:
             out/boot-report.txt
             out/fastfetch-build-check.txt
             out/keyboard-preview-build-check.txt
+            out/microcode-build-check.txt
           compression-level: 0
           retention-days: 1

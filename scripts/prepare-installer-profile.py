@@ -70,6 +70,14 @@ install -m 0644 /usr/share/aikaos/os-release /etc/os-release
 test -f /usr/share/wayland-sessions/plasma.desktop
 test -x /usr/bin/sddm
 test -x /usr/bin/calamares
+# Archiso later clears /boot. Keep the package-provided microcode images for
+# the offline installer, alongside the firmware used by mkinitcpio's hook.
+install -d /usr/share/aikaos/boot
+for vendor in amd intel; do
+    test -s /boot/$vendor-ucode.img
+    install -m 0644 /boot/$vendor-ucode.img /usr/share/aikaos/boot/
+done
+(cd /usr/share/aikaos/boot && sha256sum amd-ucode.img intel-ucode.img > SHA256SUMS)
 rm -f /usr/local/lib/aikaos/customize-live.sh
 ''', encoding='utf-8')
 (root / 'etc/pacman.d/hooks/99-aika-live.hook').write_text('''# remove from airootfs

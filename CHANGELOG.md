@@ -2,6 +2,7 @@
 
 ## Unreleased — installer development
 
+- Preserve and restore package-provided CPU microcode images across Archiso's `/boot` cleanup; add an installed-file check after a physical installation exposed the missing files.
 - Fixed clean Archiso builds, package-owned artwork collisions and handling of Archiso's staged boot files.
 - Added a pinned Calamares 3.4.3 package recipe and native Arch CI package build.
 - Added an optional Aika-themed offline installer, guarded target configuration and installed-user defaults.
