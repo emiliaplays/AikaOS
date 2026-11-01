@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
       - name: Install official Arch build dependencies
         run: |
-          pacman -Syu --noconfirm --needed cmake extra-cmake-modules ninja qt6-tools qt6-translations kcoreaddons kpmcore libpwquality polkit-qt6 python qt6-declarative qt6-svg qt6-wayland yaml-cpp rsync squashfs-tools parted gptfdisk dosfstools e2fsprogs efibootmgr grub mkinitcpio
+          pacman -Syu --noconfirm --needed cmake extra-cmake-modules ninja qt6-tools qt6-translations kcoreaddons kpmcore libpwquality polkit-qt6 python qt6-declarative qt6-svg qt6-wayland yaml-cpp rsync squashfs-tools parted gptfdisk dosfstools e2fsprogs efibootmgr grub mkinitcpio os-prober
       - name: Build the pinned upstream source as an unprivileged user
         run: |
           useradd --create-home builder

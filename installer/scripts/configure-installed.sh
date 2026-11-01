@@ -14,6 +14,8 @@ prepare)
     rm -f -- /etc/sudoers.d/10-aika-live /etc/sddm.conf.d/10-aikaos.conf \
         /etc/systemd/system/getty@tty1.service.d/autologin.conf \
         /etc/systemd/system-generators/systemd-gpt-auto-generator \
+        /etc/systemd/logind.conf.d/do-not-suspend.conf \
+        /etc/systemd/journald.conf.d/volatile-storage.conf \
         /etc/ssh/sshd_config.d/10-archiso.conf \
         /etc/mkinitcpio.conf.d/archiso.conf /root/.automated_script.sh /root/.zlogin
     usermod --lock root
@@ -67,6 +69,13 @@ finalize)
     test -s /boot/vmlinuz-linux
     test -s /boot/initramfs-linux.img
     test -s /boot/grub/grub.cfg
+    # SDDM cannot read an avatar inside a private (0700) home directory.
+    install -d -m 0755 /usr/share/sddm/faces
+    while IFS=: read -r account _ uid _; do
+        if ((uid >= 1000 && uid < 65534)); then
+            install -m 0644 /usr/share/pixmaps/aikaos-logo.png "/usr/share/sddm/faces/$account.face.icon"
+        fi
+    done < /etc/passwd
     # Initialize a distinct package trust database for this installation.
     pacman-key --init
     pacman-key --populate archlinux

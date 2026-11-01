@@ -3,12 +3,12 @@
 # Dependency references: AUR calamares (contributor Rustmilian) and upstream CMake.
 pkgname=calamares
 pkgver=3.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Distribution-independent installer framework for the AikaOS live image'
 arch=('x86_64')
 url='https://codeberg.org/Calamares/calamares'
 license=('GPL-3.0-or-later')
-depends=('kcoreaddons' 'kpmcore' 'libpwquality' 'polkit-qt6' 'python' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'yaml-cpp' 'rsync' 'squashfs-tools' 'parted' 'gptfdisk' 'dosfstools' 'e2fsprogs' 'efibootmgr' 'grub' 'mkinitcpio')
+depends=('kcoreaddons' 'kpmcore' 'libpwquality' 'polkit-qt6' 'python' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'yaml-cpp' 'rsync' 'squashfs-tools' 'parted' 'gptfdisk' 'dosfstools' 'e2fsprogs' 'efibootmgr' 'grub' 'mkinitcpio' 'os-prober')
 makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'qt6-tools' 'qt6-translations')
 source=("calamares-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
 sha256sums=('78784e6018097e4fe74cbd8f1530929626dcecfe303e14383bc8c074feb34eec')
