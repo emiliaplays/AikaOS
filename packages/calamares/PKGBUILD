@@ -1,0 +1,51 @@
+# AikaOS packaging for the official Calamares release.
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Dependency references: AUR calamares (contributor Rustmilian) and upstream CMake.
+pkgname=calamares
+pkgver=3.4.3
+pkgrel=4
+pkgdesc='Distribution-independent installer framework for the AikaOS live image'
+arch=('x86_64')
+url='https://codeberg.org/Calamares/calamares'
+license=('GPL-3.0-or-later' 'GPL-2.0-or-later')
+depends=('kcoreaddons' 'kpmcore' 'libpwquality' 'polkit-qt6' 'python' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'yaml-cpp' 'rsync' 'squashfs-tools' 'parted' 'gptfdisk' 'dosfstools' 'e2fsprogs' 'efibootmgr' 'grub' 'mkinitcpio' 'os-prober' 'perl' 'xkeyboard-config')
+makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'qt6-tools' 'qt6-translations')
+source=("calamares-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
+        'https://deb.debian.org/debian/pool/main/c/console-setup/console-setup_1.249.tar.xz'
+        'respect-partition-label-palette.patch')
+sha256sums=('78784e6018097e4fe74cbd8f1530929626dcecfe303e14383bc8c074feb34eec'
+            '2042e268b085ad900f2f9863715d67fadb95b8994554f10d407fc14f224b73ae'
+            '5dbee6382c5d512e52f4b8a263c9f815507d1e97672764c40ca6cbf6817a5059')
+options=('!debug')
+
+prepare() {
+    # Use the Qt palette for labels instead of assuming a light background.
+    patch -d "$srcdir/calamares" -Np1 -i "$srcdir/respect-partition-label-palette.patch"
+}
+
+build() {
+    local keep=' bootloader displaymanager finished fstab hwclock initcpio initcpiocfg keyboard locale localecfg machineid mount networkcfg partition removeuser services-systemd shellprocess summary umount unpackfs users welcome '
+    local skip=() directory name
+    for directory in "$srcdir/calamares/src/modules/"*/; do
+        name=${directory%/}; name=${name##*/}
+        [[ $keep == *" $name "* ]] || skip+=("$name")
+    done
+    cmake -S "$srcdir/calamares" -B build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib \
+        -DWITH_QT6=ON -DINSTALL_CONFIG=ON \
+        -DBUILD_TESTING=OFF -DBUILD_SCHEMA_TESTING=OFF \
+        -DBUILD_CRASH_REPORTING=OFF -DSKIP_MODULES="${skip[*]}"
+    cmake --build build
+}
+
+package() {
+    DESTDIR="$pkgdir" cmake --install build
+    # Calamares uses this optional Debian helper to label its keyboard preview.
+    # Bundle only the standalone helper, not Debian's console configuration.
+    install -Dm755 "$srcdir/console-setup/Keyboard/ckbcomp" "$pkgdir/usr/bin/ckbcomp"
+    install -Dm644 "$srcdir/console-setup/man/ckbcomp.1" "$pkgdir/usr/share/man/man1/ckbcomp.1"
+    install -Dm644 "$srcdir/console-setup/COPYRIGHT" "$pkgdir/usr/share/licenses/calamares/console-setup.COPYRIGHT"
+    # The live image provides one explicitly named AikaOS installer launcher.
+    rm -f "$pkgdir/usr/share/applications/calamares.desktop"
+}

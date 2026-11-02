@@ -31,7 +31,9 @@ The intermediate Archiso ISO is not the final download. The final image is `out/
 
 The release ISO is the exact tested local 11.1 image, with SHA-256 recorded in `releases/11.1-beta.1/manifest.json`. The profile reflects its final desktop, branding and supplied Fastfetch configuration, including restoration of KDE's default splash behavior.
 
-This wrapper is a reference procedure derived from that build, not a claim of a byte-reproducible rebuild. Arch repositories roll forward, package versions can change, and filesystem/ISO timestamps differ. CI performs static validation; a full clean build of this newly packaged wrapper has not been performed. Compare a rebuild's behavior and package inventory, not its SHA-256, with the published ISO.
+This is not a byte-reproducible build. Arch repositories roll forward, package versions can change, and filesystem/ISO timestamps differ. A full clean build of commit `a631d6040233b7c05e7c5e6f30b496e4c5f2c4d4` succeeded on 2026-11-01 with Archiso 92. Its new ISO booted through UEFI into KDE Plasma in QEMU, and the supplied Fastfetch configuration and branding aliases were checked. Compare behavior and package inventory, not the SHA-256, with the published beta.
+
+That build also fixed package-owned artwork collisions and removed assumptions about rerunning Archiso's deleted customization hook or copying its emptied `/boot` directory. The published beta download is unchanged.
 
 The published root filesystem was updated in its existing ISO allocation during development. Padding and checksums were validated, and all boot-image bytes were preserved. A fresh build from this repository creates a new image normally; it does not need that development-only patching process.
 
@@ -49,3 +51,7 @@ The published root filesystem was updated in its existing ISO allocation during 
 | `releases/11.1-beta.1/` | Published binary metadata and package inventory |
 
 The branding generator is optional: the generated overlay is already checked in. After asset changes, run `python3 scripts/apply-branding.py` before a new build and review the diff.
+
+## Installer development image
+
+The optional Calamares image is developed separately from the published live-only beta. See [installer development](INSTALLER.md) for the pinned package, build commands and VM acceptance criteria. Development artifacts are not stable releases.

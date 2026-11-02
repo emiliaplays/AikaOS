@@ -1,5 +1,22 @@
 # Changelog
 
+## 11.1 — 2026-11-02
+
+- Added the first installable release image, with a distinct stable filename, build manifest, exact package inventory and GitHub build-provenance attestation.
+- Completed separate acceptance of the exact stable ISO: 33 installation jobs, 29 installed/swap checks, 11 extended checks, Firefox HTTPS, password lock/unlock and installed shutdown. Retained warnings and scope are documented in the final-image report.
+- Validated Calamares' swap-file selection through a complete KVM installation and reboot: all 33 installation jobs, 29 installed checks and 11 extended checks passed.
+- Validated the corrected profile on physical hardware through a full kernel/microcode upgrade, reboot and timed S3 suspend/resume with password unlock.
+- Added English installation, image verification, maintenance, release procedures and explicit support-scope documentation.
+
+- Preserved and restored package-provided CPU microcode images across Archiso's `/boot` cleanup; added an installed-file check after a physical installation exposed the missing files.
+- Fixed clean Archiso builds, package-owned artwork collisions and handling of Archiso's staged boot files.
+- Added a pinned Calamares 3.4.3 package recipe and native Arch CI package build.
+- Added an optional Aika-themed offline installer, guarded target configuration and installed-user defaults.
+- Added upstream configuration-schema checks and invalid-target regression checks.
+- Added a separate development ISO workflow; the published beta image is unchanged.
+- Completed an offline UEFI VM installation, password login and signed-package update/branding checks; recorded remaining TCG graphics failures separately.
+- Added German keyboard previews, readable dark partition labels, installer sleep inhibition and removal of the live login hint from installed systems.
+
 ## 11.1 Beta 1 — 2026-11-01
 
 First public beta of the tested AikaOS 11.1 live image.

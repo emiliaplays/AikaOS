@@ -16,4 +16,7 @@ jobs:
       - name: Check release profile and public files
         run: python3 scripts/validate.py
       - name: Check build script syntax
-        run: bash -n scripts/build.sh
+        run: |
+          for script in scripts/*.sh installer/scripts/*; do bash -n "$script"; done
+      - name: Reject invalid installer targets
+        run: python3 tests/test-installer-guard.py

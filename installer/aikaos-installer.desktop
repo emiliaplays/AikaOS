@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Install AikaOS
+Name[de]=AikaOS installieren
+Comment=Install AikaOS on your computer
+Comment[de]=AikaOS auf deinem Computer installieren
+Exec=/usr/local/bin/install-aikaos
+Icon=aikaos-logo
+Terminal=false
+Categories=System;
+StartupNotify=true

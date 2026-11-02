@@ -1,0 +1,35 @@
+---
+componentName: aikaos
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 1040px,680px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+strings:
+  productName: AikaOS
+  shortProductName: AikaOS
+  version: 11.1 Development
+  shortVersion: 11.1-dev
+  versionedName: AikaOS 11.1 Development
+  shortVersionedName: AikaOS 11.1-dev
+  bootloaderEntryName: AikaOS
+  productUrl: https://github.com/emiliaplays/AikaOS
+  supportUrl: https://github.com/emiliaplays/AikaOS/issues
+  knownIssuesUrl: https://github.com/emiliaplays/AikaOS/issues
+  releaseNotesUrl: ''
+  donateUrl: ''
+images:
+  productIcon: aika-logo.png
+  productLogo: aika-logo.png
+  productWelcome: wallpaper.png
+style:
+  SidebarBackground: '#071424'
+  SidebarText: '#cfdeef'
+  SidebarTextCurrent: '#061321'
+  SidebarBackgroundCurrent: '#50caff'
+slideshow: show.qml
+slideshowAPI: 2
+uploadServer:
+  type: none

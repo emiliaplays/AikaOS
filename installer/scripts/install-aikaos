@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+platform=wayland
+[[ -z ${DISPLAY:-} ]] || platform=xcb
+exec sudo --preserve-env=DISPLAY,WAYLAND_DISPLAY,XDG_RUNTIME_DIR,DBUS_SESSION_BUS_ADDRESS,XAUTHORITY,LANG,LC_ALL \
+    env QT_QPA_PLATFORM="$platform" QT_QUICK_BACKEND=software \
+    systemd-inhibit --what=idle:sleep --mode=block \
+        --who='AikaOS Installer' --why='Installing AikaOS' /usr/bin/calamares "$@"
