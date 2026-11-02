@@ -84,7 +84,7 @@ Similar RA24 errors are tracked in the [upstream KDE report](https://bugs.kde.or
 
 Installed-disk reboot, package integrity, core services and the separate remote application tests are verified. Physical desktop operation, browsing, audio and lock/unlock are maintainer-confirmed. Physical monitor reconnect behavior and repeat lock/unlock after the controlled reboot have not been independently retested. The temporary loss of physical output is recorded as a monitor-reconnect incident on reportedly defective hardware, rather than a demonstrated AikaOS desktop failure.
 
-Automatic standby occurred during the initial SSH audit. The subsequent recovery had a different boot ID and therefore does **not** prove successful suspend/resume. Suspend/resume remains unverified. Accelerated virtualization, BIOS installation, dual boot, encryption and recovery also remain untested. The earlier TCG VM graphics failures remain recorded in the [VM report](INSTALLER_VALIDATION.md). This remains a development build, not stable-release approval.
+Automatic standby occurred during the initial SSH audit. The subsequent recovery had a different boot ID and therefore does **not** prove successful suspend/resume at that checkpoint. A later controlled S3 test is documented in the [update and suspend report](UPDATE_VALIDATION.md). Accelerated virtualization, BIOS installation, dual boot, encryption and recovery remain untested. The earlier TCG VM graphics failures remain recorded in the [VM report](INSTALLER_VALIDATION.md). This remains a development build, not stable-release approval.
 
 ## Fresh physical installation follow-up — 2026-11-02
 
@@ -115,4 +115,4 @@ The active, unlocked physical session was Plasma Wayland. KWin reported accelera
 
 The kernel again logged 463 RA24 messages, this time from 18:57:00 to 18:57:04 local time during graphical startup. Accelerated desktop rendering was subsequently active. The repeated warning remains an unresolved observation; this successful installation does not establish its cause or resolve the earlier VM graphics failures.
 
-Temporary uploaded helpers were removed and the sleep inhibitor was released after the reports were saved. The existing SSH setting was preserved. This verifies the corrected offline installer path and installed-disk boot on this physical UEFI system; BIOS, dual boot, encryption, suspend/resume and recovery remain outside the tested coverage.
+Temporary uploaded helpers were removed and the sleep inhibitor was released after the reports were saved. The existing SSH setting was preserved. This verifies the corrected offline installer path and installed-disk boot on this physical UEFI system. The subsequent [full upgrade, reboot and timed S3 suspend/resume test](UPDATE_VALIDATION.md) also succeeded. BIOS, dual boot, encryption and recovery remain outside the tested coverage.
