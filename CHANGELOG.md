@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased — installer development
+## 11.1 — release preparation
+
+- Added the first installable release image, with a distinct stable filename, build manifest, exact package inventory and GitHub build-provenance attestation.
+- Validated Calamares' swap-file selection through a complete KVM installation and reboot: all 33 installation jobs, 29 installed checks and 11 extended checks passed.
+- Validated the corrected profile on physical hardware through a full kernel/microcode upgrade, reboot and timed S3 suspend/resume with password unlock.
+- Added English installation, image verification, maintenance, release procedures and explicit support-scope documentation.
 
 - Preserve and restore package-provided CPU microcode images across Archiso's `/boot` cleanup; add an installed-file check after a physical installation exposed the missing files.
 - Fixed clean Archiso builds, package-owned artwork collisions and handling of Archiso's staged boot files.

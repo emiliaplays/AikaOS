@@ -1,6 +1,6 @@
-# Installer development
+# Calamares installer and image builds
 
-The `feature/calamares-installer` branch adds an optional offline Calamares installer. The existing 11.1 Beta 1 release remains a live-only image. Do not use development images on a disk containing data you need.
+The installable 11.1 image includes an offline Calamares installer. Source builds retain an optional installer/development channel for testing; the separate stable channel produces the release candidate. The historical 11.1 Beta 1 release remains a live-only image. Use a disposable disk for development-image tests.
 
 ## Design and installation behavior
 
@@ -43,7 +43,11 @@ sudo env AIKAOS_INSTALLER=1 bash scripts/build.sh
 
 The result is `out/aikaos-11.1-installer-dev-x86_64.iso`, with a SHA-256 sidecar and boot report. The script refuses to reuse `build/`; deliberately rename or remove your previous build first. The locally built package repository is used only during image construction and is not added to the running or installed system.
 
+For the stable 11.1 release channel, use `AIKAOS_INSTALLER=1 AIKAOS_CHANNEL=stable`. Its distinct output is `out/aikaos-11.1-stable-x86_64.iso`, with stable OS/installer version strings. Builds also export `packages.x86_64.txt` and `build-manifest.json`. The separate release-image workflow generates GitHub build-provenance attestations for the image and metadata; a build alone is not release approval.
+
 The `Build installer development ISO` workflow performs the same steps on a disposable Arch Linux container. Downloadable workflow artifacts expire after one day. A successful build is not an installation test.
+
+The stable release workflow retains its candidate artifact for three days. Download and verify the exact artifact before expiry; public releases use permanent release hosting instead of workflow artifact links. See [RELEASING.md](RELEASING.md).
 
 ## VM acceptance criteria
 
@@ -58,3 +62,5 @@ Use a new disposable virtual disk and separate UEFI variable store. Never pass p
 7. Check failed services and coredumps, then perform an update/reboot test.
 
 Physical hardware, dual boot, encryption, BIOS installation and recovery paths require separate tests before they can be advertised as supported. Secure Boot remains unsupported.
+
+The [swap-file installation test](SWAP_VALIDATION.md) completed all 33 jobs and passed 29 installed checks plus 11 extended checks in a KVM VM. Use `python3 tests/check-installed-system.py --user USER --expect-swap-file` for that installation choice; the flag adds private-file, fstab, automatic-activation and generated-unit checks.

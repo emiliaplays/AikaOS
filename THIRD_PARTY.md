@@ -1,6 +1,6 @@
 # Third-party components
 
-AikaOS builds on Arch Linux, Archiso, KDE Plasma, GNU GRUB, Fastfetch and the other packages listed in `releases/11.1-beta.1/packages.x86_64.txt`.
+AikaOS builds on Arch Linux, Archiso, KDE Plasma, GNU GRUB, Fastfetch and the other packages in each release's exact package inventory. The historical Beta 1 inventory is in `releases/11.1-beta.1/packages.x86_64.txt`; the installable 11.1 image's inventory accompanies its build manifest in `releases/11.1/`.
 
 The live profile originated from Archiso's `releng` profile. Archiso is GPL-3.0-or-later; its upstream license and author list are included under `third_party/archiso/`. Existing upstream notices in profile files are retained. AikaOS-specific changes add desktop packages, live-session defaults, branding and GRUB packaging.
 

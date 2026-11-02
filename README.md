@@ -1,39 +1,44 @@
 <p align="center"><img src="assets/branding/aika-logo-v2.png" width="150" alt="AikaOS mascot"></p>
 
 <h1 align="center">AikaOS</h1>
-<p align="center"><strong>An Arch-based KDE Plasma live system with an Aika identity.</strong></p>
-<p align="center">11.1 Beta 1 · x86_64 · KDE Plasma · Custom GRUB · Fastfetch</p>
-<p align="center"><a href="https://sourceforge.net/projects/aikaos/files/11.1-beta.1/aikaos-11.1-x86_64-grub.iso/download">Download ISO</a> · <a href="https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1">Release notes</a> · <a href="docs/GETTING_STARTED.md">Create a USB with Rufus</a> · <a href="docs/BUILDING.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
+<p align="center"><strong>An Arch-based KDE Plasma desktop with an Aika identity and offline installation.</strong></p>
+<p align="center">11.1 release preparation · x86_64 · Calamares · KDE Plasma · Custom GRUB</p>
+<p align="center"><a href="releases/11.1/RELEASE_NOTES.md">11.1 release notes</a> · <a href="docs/INSTALLING.md">Install with Rufus</a> · <a href="docs/VERIFYING.md">Verify an image</a> · <a href="docs/INSTALLER.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
 
 ![AikaOS desktop](docs/screenshots/desktop.png)
 
-## Meet the beta
+## Meet AikaOS 11.1
 
-AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop, and a consistent Aika mascot. This first public beta packages the working 11.1 live image for community testing.
+AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop and a consistent Aika mascot. Version 11.1 adds an Aika-themed offline Calamares installer and password-protected installed-user defaults.
+
+**Publication pending:** this branch prepares the first installable release. The [published Beta 1](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1) remains available as the historical live-only image.
 
 - **KDE Plasma on Wayland** with a dark desktop and selected Aika-themed icons.
 - **Aika branding** for the launcher, system logo, avatar, desktop wallpaper, and lock screen.
 - **Custom GRUB artwork** with BIOS and UEFI boot support.
 - **Fastfetch 2.70.0** preinstalled with a color ASCII portrait, plus compact and full-character variants.
 - **Everyday tools** including Firefox, Dolphin, Konsole, Kate, and NetworkManager.
+- **Offline Calamares installation** to ext4, with no swap or an automatically enabled swap file.
+- **Installed-account defaults** with password-based login/sudo, a locked root account and SSH disabled by default.
 
 ## Download and boot
 
-Get the single ISO from the SourceForge link in the [11.1 Beta 1 release](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1), verify its SHA-256, and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **ISO Image mode** if Rufus offers an ISO/DD choice; the maintainer confirmed a successful live boot using this mode. DD Image mode is an alternative if ISO mode fails on your hardware. USB writing erases the selected drive.
+The 11.1 release image has the distinct filename **`aikaos-11.1-stable-x86_64.iso`**. Its single-file SourceForge download will be linked from the official GitHub release after final acceptance. Checksums, package inventory, build metadata and a verifiable build-provenance bundle accompany it.
 
-Disable Secure Boot for this unsigned beta, then select the UEFI USB entry in your computer's boot menu. See the [step-by-step Rufus guide](docs/GETTING_STARTED.md).
+Verify the image and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **ISO Image mode** if offered. Boot the **UEFI** USB entry with Secure Boot disabled. USB writing erases the selected USB drive; erase-disk installation separately erases the selected target disk. Follow the [installation guide](docs/INSTALLING.md).
 
 | Release detail | Value |
 | --- | --- |
-| Image | `aikaos-11.1-x86_64-grub.iso` |
-| Status | **Beta / prerelease** |
+| Image | `aikaos-11.1-stable-x86_64.iso` |
+| Status | **Release candidate — final image acceptance in progress** |
 | Architecture | x86_64 |
 | Live account | `aika` — automatic login, no password, passwordless `sudo` |
 | Session defaults | German (`de_DE.UTF-8`), German keyboard, Europe/Berlin timezone |
 | Persistence | Live changes are held in RAM and reset after reboot |
-| Installer | `archinstall` CLI is included; no AikaOS graphical installer |
+| Installer | Aika-themed offline Calamares 3.4.3 |
+| Validated installation scope | Fresh x86_64 UEFI installation to a dedicated disk, ext4 |
 
-The published ISO is the existing tested 11.1 image. English documentation does not change its German session defaults. The live image's artwork and settings are not automatically transferred by a stock Arch installation.
+English documentation does not change the German session defaults. Calamares transfers the Aika identity/artwork and replaces the open live account with the user you create. See [maintenance](docs/MAINTENANCE.md) for Arch package updates and AikaOS-specific configuration changes.
 
 ## A closer look
 
@@ -43,17 +48,17 @@ The published ISO is the existing tested 11.1 image. English documentation does 
 
 ![Custom Aika GRUB menu](docs/screenshots/grub.png)
 
-## Testing and beta scope
+## Validation and scope
 
-The image was checked in QEMU, its complete written USB image was read back and matched by SHA-256, and the maintainer reported a successful physical live boot on 1 November 2026. Hardware coverage is still limited. Review [validation details and known limitations](docs/VALIDATION.md) before reporting an issue.
+The corrected installer profile passed physical installation, a full kernel/microcode update and reboot, timed S3 suspend/resume, and a complete KVM swap-file installation. That KVM installation passed **29/29** installed checks and **11/11** extended checks, including normal password lock/unlock. The final stable-channel image receives a separate acceptance pass.
 
-This is a live beta with an intentionally open live account. It is intended for evaluation and development, rather than a hardened production deployment. It does not install to an internal drive automatically.
+Read the [hardware report](docs/HARDWARE_VALIDATION.md), [update/suspend report](docs/UPDATE_VALIDATION.md), [swap installation report](docs/SWAP_VALIDATION.md) and [known issues](docs/KNOWN_ISSUES.md). Secure Boot, legacy-BIOS installation, dual boot, encryption, hibernation and recovery are outside the validated release scope. Earlier TCG graphics failures remain documented separately from the successful KVM run.
 
 ## Source and contributions
 
 The repository contains the live profile, artwork, selected icons, Fastfetch configurations, and a [reference build procedure](docs/BUILDING.md). Build in an Arch Linux environment; the ISO is a release download, not a Git blob.
 
-An Aika-themed offline Calamares installer is being developed on `feature/calamares-installer`. Its first complete UEFI VM installation and installed-disk boot succeeded. See the [installer build guide](docs/INSTALLER.md), [development test results](docs/INSTALLER_VALIDATION.md) and [installed-system hardware audit](docs/HARDWARE_VALIDATION.md), including the microcode-file correction and remaining graphics limitations. This does not change the live-only installer scope of the published Beta 1 image.
+The [installer build guide](docs/INSTALLER.md) covers development/stable channels and the pinned Calamares recipe. The [release procedure](docs/RELEASING.md) separates a candidate build, verification, acceptance and publication. The original [Beta 1 validation](docs/VALIDATION.md) and image are preserved.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for useful bug reports and changes. For security concerns, see [SECURITY.md](SECURITY.md).
 
