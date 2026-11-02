@@ -96,4 +96,23 @@ The preserved `/usr/share/aikaos/boot` directory was also absent. The used USB s
 
 The boot logged 491 RA24 messages during a six-second graphical-startup burst. The desktop was subsequently accelerated and the maintainer reported working output. This preserves the recurring warning as an unresolved observation without treating it as a visible desktop failure or proving a hardware cause.
 
-No package update, microcode repair or GRUB rewrite was performed during this follow-up. Its initial evidence was retained; the temporary sleep inhibitor was released and uploaded temporary helpers were removed. A full installation from the positively identified corrected image remains outstanding.
+No package update, microcode repair or GRUB rewrite was performed during this follow-up. Its initial evidence was retained; the temporary sleep inhibitor was released and uploaded temporary helpers were removed. At this checkpoint, a full installation from the corrected image was still outstanding; the subsequent test below completes that installation check.
+
+## Corrected-image physical installation — 2026-11-02
+
+The maintainer then performed a fresh physical installation using the clearly named microcode-corrected image and enabled SSH for validation. The subsequent audit confirmed another new machine identity, completed installation state and an installed boot from `/dev/sda2` (ext4), with the FAT32 EFI partition on the same SATA SSD. No USB installation medium was attached. No package update, manual microcode repair or GRUB regeneration was performed before or during this audit.
+
+**The installer microcode correction passed its fresh-installation test.** All seven targeted checks passed:
+
+- Both `/boot/amd-ucode.img` and `/boot/intel-ucode.img` exactly matched the original payloads verified in the `da8120f` ISO and the preserved `/usr/share/aikaos/boot` copies; owner and mode were root and `0644`.
+- The preserved checksum manifest verified successfully.
+- GRUB configuration passed `grub-script-check`, and all generated default/fallback initrd entries included both microcode images.
+- The combined initramfs also contained Intel early microcode, and the boot journal reported the early CPU revision update from `0x28` to `0x2f`.
+
+The installation acceptance check passed **24 of 25** checks, with only `sshd_disabled=false` because the maintainer intentionally enabled SSH. All **11 of 11** extended checks passed, including package database consistency and the complete package-owned file check. No package-owned files were missing. The package tool warned that online `core`/`extra` sync databases had not yet been downloaded; this read-only audit did not refresh repositories or upgrade packages.
+
+The active, unlocked physical session was Plasma Wayland. KWin reported accelerated OpenGL ES on the RX 580 with radeonsi and no global software-rendering overrides. KSplash completed successfully. No system/user services were failed and no coredumps were present. DNS, HTTPS, audio graph response, fstab, the exact supplied Fastfetch configuration, Aika icons and desktop/lock wallpapers, automatic-lock configuration and the disposable user-file round trip all passed. These SSH checks do not replace a visual application or lock/unlock test on this particular fresh installation.
+
+The kernel again logged 463 RA24 messages, this time from 18:57:00 to 18:57:04 local time during graphical startup. Accelerated desktop rendering was subsequently active. The repeated warning remains an unresolved observation; this successful installation does not establish its cause or resolve the earlier VM graphics failures.
+
+Temporary uploaded helpers were removed and the sleep inhibitor was released after the reports were saved. The existing SSH setting was preserved. This verifies the corrected offline installer path and installed-disk boot on this physical UEFI system; BIOS, dual boot, encryption, suspend/resume and recovery remain outside the tested coverage.
