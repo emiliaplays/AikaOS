@@ -1,6 +1,6 @@
 # Installed-system hardware validation
 
-Physical test performed by the maintainer and audited over SSH on 2026-11-01. This is separate from the [VM installation report](INSTALLER_VALIDATION.md). Raw diagnostic logs, account names, network addresses and credentials are not published.
+Physical tests performed by the maintainer and audited over SSH on 2026-11-01 and 2026-11-02. This is separate from the [VM installation report](INSTALLER_VALIDATION.md). Raw diagnostic logs, account names, network addresses and credentials are not published.
 
 ## Test system
 
@@ -85,3 +85,15 @@ Similar RA24 errors are tracked in the [upstream KDE report](https://bugs.kde.or
 Installed-disk reboot, package integrity, core services and the separate remote application tests are verified. Physical desktop operation, browsing, audio and lock/unlock are maintainer-confirmed. Physical monitor reconnect behavior and repeat lock/unlock after the controlled reboot have not been independently retested. The temporary loss of physical output is recorded as a monitor-reconnect incident on reportedly defective hardware, rather than a demonstrated AikaOS desktop failure.
 
 Automatic standby occurred during the initial SSH audit. The subsequent recovery had a different boot ID and therefore does **not** prove successful suspend/resume. Suspend/resume remains unverified. Accelerated virtualization, BIOS installation, dual boot, encryption and recovery also remain untested. The earlier TCG VM graphics failures remain recorded in the [VM report](INSTALLER_VALIDATION.md). This remains a development build, not stable-release approval.
+
+## Fresh physical installation follow-up — 2026-11-02
+
+The maintainer completed another USB installation, enabled SSH and reported working GPU output. The audit confirmed a new machine identity, completed installer state and an installed ext4 root on the internal SATA disk. No USB device was attached at this installed-system checkpoint. The physical session was active, unlocked **Plasma Wayland**, and KWin reported accelerated OpenGL ES rendering on the RX 580 with no global software-rendering override.
+
+The initial audit passed **23 of 25** installation checks and **10 of 11** extended checks. The exceptions were the intentionally enabled SSH service and the same two missing package-owned microcode images, which also made the package-file check fail. There were no failed system/user services or coredumps; KSplash completed successfully. DNS, HTTPS, audio graph response, fstab, Aika desktop/lock artwork, exact Fastfetch configuration and the disposable user-file round trip passed. Early Intel CPU microcode still loaded successfully from the combined initramfs.
+
+The preserved `/usr/share/aikaos/boot` directory was also absent. The used USB stick was then inspected read-only on Windows. A complete SHA-512 read of its 2,207,404,032-byte `airootfs.sfs` matched both its manifest and the compressed root inside the **older `bba059b` installer image**; it differed from the microcode-corrected `da8120f` image. This identifies the older installation medium, rather than a failed restoration in the corrected installer. Both local ISO files had shared the same basename in different directories. The corrected ISO now additionally has the unambiguous local filename `AikaOS-11.1-dev-da8120f-microcode-fixed.iso`, with unchanged SHA-256 `d2f0abcf3396ebc8e6ce8d3817f703b1e0c30dac1f036622a50fd6abb5effe3b`.
+
+The boot logged 491 RA24 messages during a six-second graphical-startup burst. The desktop was subsequently accelerated and the maintainer reported working output. This preserves the recurring warning as an unresolved observation without treating it as a visible desktop failure or proving a hardware cause.
+
+No package update, microcode repair or GRUB rewrite was performed during this follow-up. Its initial evidence was retained; the temporary sleep inhibitor was released and uploaded temporary helpers were removed. A full installation from the positively identified corrected image remains outstanding.
