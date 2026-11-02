@@ -1,6 +1,6 @@
 # AikaOS 11.1
 
-**Release preparation — publication pending.** The final image must complete its acceptance pass before this release is published.
+**Prepared for publication.** The exact final image has passed acceptance; the public ISO upload and release publication are still pending.
 
 AikaOS 11.1 is the first installable AikaOS release: an Arch-based x86_64 desktop with KDE Plasma, Aika artwork and an offline Calamares installer.
 
@@ -17,6 +17,10 @@ AikaOS 11.1 is the first installable AikaOS release: an Arch-based x86_64 deskto
 
 The release filename is **`aikaos-11.1-stable-x86_64.iso`**. Its single-file download will be hosted on SourceForge, with the checksum, build manifest, package inventory and provenance bundle attached to the GitHub release.
 
+- Size: **2,334,775,296 bytes**.
+- SHA-256: `c14421479741e7ea8de9fda50af7ea617ca451ac38f869bf36078e4710f00116`.
+- Build source: `f07245344426639dab65dd5087df73ed202a208c`; Linux 7.2.14 and KDE Plasma 6.8.2.
+
 Verify the image, then use **Rufus → ISO Image mode** to write an 8 GB or larger USB drive. Boot its **UEFI** entry with Secure Boot disabled. See the [installation guide](../../docs/INSTALLING.md) and [verification instructions](../../docs/VERIFYING.md).
 
 The live session uses German language/keyboard and Europe/Berlin time by default. Calamares allows these choices to be changed. The live account is `aika`, with automatic login and passwordless sudo; those live settings are removed from the installed system.
@@ -29,9 +33,9 @@ The supported installation path is a **fresh x86_64 UEFI installation to a dedic
 
 ## Validation and known limitations
 
-The corrected installer profile passed a physical installation, a full 25-package update and reboot, and timed S3 suspend/resume. A complete KVM swap-file installation passed all 33 jobs, 29 installed checks and 11 extended checks, including normal password lock/unlock. These earlier-profile results and the final-image acceptance results are documented separately; see [test coverage](../../docs/SWAP_VALIDATION.md).
+The corrected installer profile passed a physical installation, a full 25-package update and reboot, and timed S3 suspend/resume. The exact final stable ISO passed a separate fresh KVM swap-file installation: all **33 jobs**, **29 installed checks** and **11 extended checks**, including Firefox HTTPS, password lock/unlock and installed shutdown. See [final-image acceptance](../../docs/RELEASE_VALIDATION.md) and the separate [earlier swap test](../../docs/SWAP_VALIDATION.md).
 
-Earlier QEMU TCG tests had startup timeouts and unreliable graphics transitions. A later KVM run did not reproduce them. Old-hardware ACPI messages and earlier RA24 graphics warnings remain recorded; there is no universal hardware-compatibility claim. Read [known issues and scope](../../docs/KNOWN_ISSUES.md).
+Earlier QEMU TCG tests had startup timeouts and unreliable graphics transitions. Later KVM tests passed the visible desktop/unlock flow. A live shutdown delay, optional desktop/backend warnings, old-hardware ACPI messages and earlier RA24 graphics warnings remain recorded. Discover's graphical Arch package backend is not configured; use full pacman upgrades. Read [known issues and scope](../../docs/KNOWN_ISSUES.md).
 
 ## Updates and support
 

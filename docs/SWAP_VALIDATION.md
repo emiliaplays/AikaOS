@@ -51,4 +51,4 @@ This KVM run did not reproduce the earlier TCG startup timeout or unusable unloc
 
 The first host QEMU startup failed while its optional Virtio graphics components were incomplete. After installing the remaining official display modules, the guest started with KVM. That host-side test-tool coredump was retained separately and was not counted as a guest/distribution crash.
 
-This validates the offered swap-file installation path and one installed boot, not hibernation or behavior under memory pressure. The subsequent stable-channel image is a separate build and requires its own final acceptance pass.
+This validates the offered swap-file installation path and one installed boot, not hibernation or behavior under memory pressure. The subsequent stable-channel image is a separate build; its completed acceptance pass is documented in [RELEASE_VALIDATION.md](RELEASE_VALIDATION.md).

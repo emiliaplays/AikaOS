@@ -1,0 +1,14 @@
+{
+  "version": "11.1",
+  "channel": "stable",
+  "architecture": "x86_64",
+  "installer_included": true,
+  "filename": "aikaos-11.1-stable-x86_64.iso",
+  "bytes": 2334775296,
+  "sha256": "c14421479741e7ea8de9fda50af7ea617ca451ac38f869bf36078e4710f00116",
+  "source_commit": "f07245344426639dab65dd5087df73ed202a208c",
+  "built_at_utc": "2026-11-02T19:15:48.742415+00:00",
+  "package_inventory": "packages.x86_64.txt",
+  "recommended_rufus_mode": "ISO Image mode",
+  "secure_boot_supported": false
+}

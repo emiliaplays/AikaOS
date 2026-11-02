@@ -23,14 +23,14 @@ AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop and 
 
 ## Download and boot
 
-The 11.1 release image has the distinct filename **`aikaos-11.1-stable-x86_64.iso`**. Its single-file SourceForge download will be linked from the official GitHub release after final acceptance. Checksums, package inventory, build metadata and a verifiable build-provenance bundle accompany it.
+The 11.1 release image has the distinct filename **`aikaos-11.1-stable-x86_64.iso`**. Its single-file SourceForge download will be linked from the official GitHub release when published. Checksums, package inventory, build metadata and a verifiable build-provenance bundle accompany it.
 
 Verify the image and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **ISO Image mode** if offered. Boot the **UEFI** USB entry with Secure Boot disabled. USB writing erases the selected USB drive; erase-disk installation separately erases the selected target disk. Follow the [installation guide](docs/INSTALLING.md).
 
 | Release detail | Value |
 | --- | --- |
 | Image | `aikaos-11.1-stable-x86_64.iso` |
-| Status | **Release candidate — final image acceptance in progress** |
+| Status | **Final image tested — prepared for publication** |
 | Architecture | x86_64 |
 | Live account | `aika` — automatic login, no password, passwordless `sudo` |
 | Session defaults | German (`de_DE.UTF-8`), German keyboard, Europe/Berlin timezone |
@@ -50,7 +50,7 @@ English documentation does not change the German session defaults. Calamares tra
 
 ## Validation and scope
 
-The corrected installer profile passed physical installation, a full kernel/microcode update and reboot, timed S3 suspend/resume, and a complete KVM swap-file installation. That KVM installation passed **29/29** installed checks and **11/11** extended checks, including normal password lock/unlock. The final stable-channel image receives a separate acceptance pass.
+The corrected installer profile passed physical installation, a full kernel/microcode update and reboot, timed S3 suspend/resume, and a complete KVM swap-file installation. The **exact final stable image** then passed a separate fresh KVM installation, all **29/29** installed/swap checks and **11/11** extended checks, including Firefox HTTPS and normal password lock/unlock. Its checksum, source revision and retained warnings are documented in [final-image acceptance](docs/RELEASE_VALIDATION.md).
 
 Read the [hardware report](docs/HARDWARE_VALIDATION.md), [update/suspend report](docs/UPDATE_VALIDATION.md), [swap installation report](docs/SWAP_VALIDATION.md) and [known issues](docs/KNOWN_ISSUES.md). Secure Boot, legacy-BIOS installation, dual boot, encryption, hibernation and recovery are outside the validated release scope. Earlier TCG graphics failures remain documented separately from the successful KVM run.
 
