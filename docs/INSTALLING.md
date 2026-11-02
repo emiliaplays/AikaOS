@@ -4,7 +4,7 @@ This guide covers a fresh **x86_64 UEFI/ext4 installation to a dedicated target 
 
 ## Prepare the USB
 
-1. Download `aikaos-11.1-stable-x86_64.iso` from the official GitHub release's SourceForge link.
+1. Download [`aikaos-11.1-stable-x86_64.iso`](https://sourceforge.net/projects/aikaos/files/11.1/aikaos-11.1-stable-x86_64.iso/download) using the official [11.1 release](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1).
 2. Follow [VERIFYING.md](VERIFYING.md) to check its SHA-256 and optional build-provenance attestation.
 3. Open [Rufus](https://rufus.ie/en/) on Windows. Select the intended **8 GB or larger USB drive** and the exact stable ISO filename.
 4. Start writing. If Rufus asks, choose **ISO Image mode**. Writing erases the selected USB drive.

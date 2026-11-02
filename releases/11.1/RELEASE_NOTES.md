@@ -1,6 +1,6 @@
 # AikaOS 11.1
 
-**Prepared for publication.** The exact final image has passed acceptance; the public ISO upload and release publication are still pending.
+Released on **2026-11-02**.
 
 AikaOS 11.1 is the first installable AikaOS release: an Arch-based x86_64 desktop with KDE Plasma, Aika artwork and an offline Calamares installer.
 
@@ -15,7 +15,9 @@ AikaOS 11.1 is the first installable AikaOS release: an Arch-based x86_64 deskto
 
 ## Download and install
 
-The release filename is **`aikaos-11.1-stable-x86_64.iso`**. Its single-file download will be hosted on SourceForge, with the checksum, build manifest, package inventory and provenance bundle attached to the GitHub release.
+**[Download AikaOS 11.1 (single ISO, 2.33 GB)](https://sourceforge.net/projects/aikaos/files/11.1/aikaos-11.1-stable-x86_64.iso/download)**
+
+The release filename is **`aikaos-11.1-stable-x86_64.iso`**. The checksum, build manifest, package inventory and provenance bundle are attached to the [GitHub release](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1). The ISO is hosted as one complete file on SourceForge.
 
 - Size: **2,334,775,296 bytes**.
 - SHA-256: `c14421479741e7ea8de9fda50af7ea617ca451ac38f869bf36078e4710f00116`.

@@ -2,8 +2,8 @@
 
 <h1 align="center">AikaOS</h1>
 <p align="center"><strong>An Arch-based KDE Plasma desktop with an Aika identity and offline installation.</strong></p>
-<p align="center">11.1 release preparation · x86_64 · Calamares · KDE Plasma · Custom GRUB</p>
-<p align="center"><a href="releases/11.1/RELEASE_NOTES.md">11.1 release notes</a> · <a href="docs/INSTALLING.md">Install with Rufus</a> · <a href="docs/VERIFYING.md">Verify an image</a> · <a href="docs/INSTALLER.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
+<p align="center">11.1 · x86_64 · Calamares · KDE Plasma · Custom GRUB</p>
+<p align="center"><a href="https://github.com/emiliaplays/AikaOS/releases/tag/v11.1">Download 11.1</a> · <a href="releases/11.1/RELEASE_NOTES.md">Release notes</a> · <a href="docs/INSTALLING.md">Install with Rufus</a> · <a href="docs/VERIFYING.md">Verify an image</a> · <a href="docs/INSTALLER.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
 
 ![AikaOS desktop](docs/screenshots/desktop.png)
 
@@ -11,7 +11,7 @@
 
 AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop and a consistent Aika mascot. Version 11.1 adds an Aika-themed offline Calamares installer and password-protected installed-user defaults.
 
-**Publication pending:** this branch prepares the first installable release. The [published Beta 1](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1) remains available as the historical live-only image.
+**[AikaOS 11.1 is available](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1)** as the first installable release. [Beta 1](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1-beta.1) remains available as the historical live-only image.
 
 - **KDE Plasma on Wayland** with a dark desktop and selected Aika-themed icons.
 - **Aika branding** for the launcher, system logo, avatar, desktop wallpaper, and lock screen.
@@ -23,14 +23,14 @@ AikaOS combines an Arch Linux base with KDE Plasma, a midnight-blue desktop and 
 
 ## Download and boot
 
-The 11.1 release image has the distinct filename **`aikaos-11.1-stable-x86_64.iso`**. Its single-file SourceForge download will be linked from the official GitHub release when published. Checksums, package inventory, build metadata and a verifiable build-provenance bundle accompany it.
+**[Download the AikaOS 11.1 ISO from SourceForge](https://sourceforge.net/projects/aikaos/files/11.1/aikaos-11.1-stable-x86_64.iso/download)** — one file, 2.33 GB. The distinct filename is `aikaos-11.1-stable-x86_64.iso`. [GitHub release assets](https://github.com/emiliaplays/AikaOS/releases/tag/v11.1) provide the checksum, package inventory, build metadata and verifiable build-provenance bundle.
 
 Verify the image and write it to an **8 GB or larger USB drive using [Rufus](https://rufus.ie/en/)**. Choose **ISO Image mode** if offered. Boot the **UEFI** USB entry with Secure Boot disabled. USB writing erases the selected USB drive; erase-disk installation separately erases the selected target disk. Follow the [installation guide](docs/INSTALLING.md).
 
 | Release detail | Value |
 | --- | --- |
 | Image | `aikaos-11.1-stable-x86_64.iso` |
-| Status | **Final image tested — prepared for publication** |
+| Status | **Released on 2026-11-02** |
 | Architecture | x86_64 |
 | Live account | `aika` — automatic login, no password, passwordless `sudo` |
 | Session defaults | German (`de_DE.UTF-8`), German keyboard, Europe/Berlin timezone |
