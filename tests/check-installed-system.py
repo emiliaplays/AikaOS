@@ -12,6 +12,7 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--user', required=True, help='The account created by the installer')
+parser.add_argument('--expect-swap-file', action='store_true', help='Verify the swap-file installation option after boot')
 args = parser.parse_args()
 if os.geteuid() != 0:
     parser.error('Run as root to inspect account and service state.')
@@ -64,6 +65,21 @@ checks['no_failed_system_services'] = system_failed['exit'] == 0 and not system_
 checks['no_failed_user_services'] = user_failed['exit'] == 0 and not user_failed['stdout']
 cores = command('coredumpctl', '--no-pager', '--no-legend', 'list')
 checks['no_coredumps'] = cores['exit'] in (0, 1) and not cores['stdout']
+swap_report = None
+if args.expect_swap_file:
+    swapfile = Path('/swapfile')
+    checks['swapfile_private'] = (
+        swapfile.is_file() and not swapfile.is_symlink()
+        and swapfile.stat().st_uid == 0 and swapfile.stat().st_mode & 0o777 == 0o600
+        and swapfile.stat().st_size >= 64 * 1024 * 1024
+    )
+    swap_fstab = command('findmnt', '--fstab', '--types', 'swap', '--noheadings', '--output', 'SOURCE')
+    active_swap = command('swapon', '--show=NAME', '--noheadings', '--raw')
+    swap_unit = command('systemctl', 'is-active', 'swapfile.swap')
+    checks['swapfile_in_fstab'] = swap_fstab['exit'] == 0 and '/swapfile' in swap_fstab['stdout'].splitlines()
+    checks['swapfile_active'] = active_swap['exit'] == 0 and '/swapfile' in active_swap['stdout'].splitlines()
+    checks['swapfile_unit_active'] = swap_unit['stdout'] == 'active'
+    swap_report = {'fstab': swap_fstab, 'active': active_swap, 'unit': swap_unit}
 report = {
     'checks': checks,
     'system_failed': system_failed,
@@ -75,5 +91,7 @@ report = {
     'package_keyring_has_private_key': any(Path('/etc/pacman.d/gnupg/private-keys-v1.d').glob('*.key')),
     'sudo_policy': command('sudo', '-l', '-U', args.user),
 }
+if swap_report is not None:
+    report['swap'] = swap_report
 print(json.dumps(report, indent=2))
 sys.exit(0 if all(checks.values()) else 1)

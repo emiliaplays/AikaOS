@@ -9,6 +9,7 @@ import subprocess
 repo = Path(__file__).resolve().parent.parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--profile', required=True, type=Path)
+parser.add_argument('--channel', choices=('development', 'stable'), default='development')
 args = parser.parse_args()
 profile = args.profile.resolve()
 profile.relative_to((repo / 'build').resolve())
@@ -36,18 +37,23 @@ shutil.copy2(source / 'aikaos-installer.desktop', desktop)
 user_dirs = root / 'home/aika/.config/user-dirs.dirs'
 user_dirs.write_text('XDG_DESKTOP_DIR="$HOME/Desktop"\n', encoding='utf-8')
 
-identity = '''NAME="AikaOS"
-PRETTY_NAME="AikaOS 11.1 Development"
+pretty_name = 'AikaOS 11.1' if args.channel == 'stable' else 'AikaOS 11.1 Development'
+build_id = '11.1' if args.channel == 'stable' else 'installer-dev'
+identity = f'''NAME="AikaOS"
+PRETTY_NAME="{pretty_name}"
 ID=aikaos
 ID_LIKE=arch
 VERSION_ID=11.1
-BUILD_ID=installer-dev
+BUILD_ID={build_id}
 ANSI_COLOR="38;2;0;180;255"
 LOGO=aikaos-logo
 HOME_URL="https://github.com/emiliaplays/AikaOS"
 SUPPORT_URL="https://github.com/emiliaplays/AikaOS/issues"
 '''
 (root / 'usr/share/aikaos/os-release').write_text(identity, encoding='utf-8')
+if args.channel == 'stable':
+    descriptor = branding / 'branding.desc'
+    descriptor.write_text(descriptor.read_text().replace('11.1 Development', '11.1').replace('11.1-dev', '11.1'), encoding='utf-8')
 # Keep the build-only local package repository out of the running system.
 shutil.copy2(repo / 'profile/pacman.conf', root / 'etc/pacman.conf')
 os_release = root / 'etc/os-release'
@@ -110,7 +116,8 @@ shutil.copy2(repo / 'assets/branding/aika-logo-v2.png', root / 'etc/skel/.face.i
 packages = profile / 'packages.x86_64'
 packages.write_text('\n'.join(sorted(set(packages.read_text().split()) | {'calamares'})) + '\n', encoding='utf-8')
 definition = profile / 'profiledef.sh'
-definition.write_text(definition.read_text().replace('iso_version="11.1"', 'iso_version="11.1-installer-dev"') + '''
+iso_version = '11.1' if args.channel == 'stable' else '11.1-installer-dev'
+definition.write_text(definition.read_text().replace('iso_version="11.1"', f'iso_version="{iso_version}"') + '''
 file_permissions+=(
   ["/usr/local/bin/install-aikaos"]="0:0:755"
   ["/usr/local/lib/aikaos/configure-installed.sh"]="0:0:755"

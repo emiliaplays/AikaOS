@@ -16,6 +16,9 @@ mkdir -p "$work/profile" "$work/intermediate" "$out"
 cp -a "$repo/profile/." "$work/profile/"
 installer=${AIKAOS_INSTALLER:-0}
 [[ $installer == 0 || $installer == 1 ]] || { echo 'AIKAOS_INSTALLER must be 0 or 1.' >&2; exit 1; }
+channel=${AIKAOS_CHANNEL:-development}
+[[ $channel == development || $channel == stable ]] || { echo 'AIKAOS_CHANNEL must be development or stable.' >&2; exit 1; }
+[[ $channel != stable || $installer == 1 ]] || { echo 'The stable image requires the Calamares installer.' >&2; exit 1; }
 if [[ $installer == 1 ]]; then
     command -v repo-add >/dev/null
     shopt -s nullglob
@@ -23,7 +26,7 @@ if [[ $installer == 1 ]]; then
     ((${#local_packages[@]} == 1)) || { echo 'Build or download one Calamares package into out/localrepo/ first.' >&2; exit 1; }
     [[ $(pacman -Qp "${local_packages[0]}" | cut -d ' ' -f 1) == calamares ]] || { echo 'Unexpected local package.' >&2; exit 1; }
     repo-add -q "$out/localrepo/aikaos-build.db.tar.gz" "${local_packages[@]}"
-    python3 "$repo/scripts/prepare-installer-profile.py" --profile "$work/profile"
+    python3 "$repo/scripts/prepare-installer-profile.py" --profile "$work/profile" --channel "$channel"
     # This repository contains only our locally built installer package. The
     # normal Arch repository signature policy remains unchanged.
     printf '\n[aikaos-build]\nSigLevel = Optional TrustedOnly\nServer = file://%s\n' "$out/localrepo" >> "$work/profile/pacman.conf"
@@ -50,11 +53,21 @@ fi
 mount --bind "$root" "$root"
 trap 'umount "$root" 2>/dev/null || true' EXIT
 arch-chroot "$root" fastfetch --config /etc/xdg/fastfetch/config.jsonc --pipe > "$out/fastfetch-build-check.txt"
+arch-chroot "$root" pacman -Q > "$out/packages.x86_64.txt"
 grep -q 'AikaOS 11.1' "$out/fastfetch-build-check.txt"
 if [[ $installer == 1 ]]; then
     (cd "$root/usr/share/aikaos/boot" && sha256sum -c SHA256SUMS) > "$out/microcode-build-check.txt"
     arch-chroot "$root" ckbcomp -model pc106 -layout de -compact > "$out/keyboard-preview-build-check.txt"
     grep -Eq '^keycode[[:space:]]+[0-9]+' "$out/keyboard-preview-build-check.txt"
+fi
+if [[ $channel == stable ]]; then
+    grep -Fxq 'PRETTY_NAME="AikaOS 11.1"' "$root/etc/os-release"
+    grep -Fxq 'BUILD_ID=11.1' "$root/etc/os-release"
+    if grep -Eq 'Development|11\.1-dev' "$root/etc/calamares/branding/aikaos/branding.desc"; then
+        echo 'Development branding remains in the stable profile.' >&2
+        exit 1
+    fi
+    printf 'Stable identity and installer version: AikaOS 11.1\n' > "$out/release-profile-check.txt"
 fi
 umount "$root"
 trap - EXIT
@@ -82,7 +95,31 @@ grub-script-check "$stage/boot/grub/grub.cfg"
 
 iso="$out/aikaos-11.1-x86_64-grub.iso"
 [[ $installer == 0 ]] || iso="$out/aikaos-11.1-installer-dev-x86_64.iso"
+[[ $channel != stable ]] || iso="$out/aikaos-11.1-stable-x86_64.iso"
 grub-mkrescue -o "$iso" "$stage" -volid AIKAOS_11
 (cd "$out" && sha256sum "$(basename "$iso")" > "$(basename "$iso").sha256")
 xorriso -indev "$iso" -report_el_torito plain -report_system_area plain > "$out/boot-report.txt" 2>&1
+python3 - "$repo" "$iso" "$channel" "$installer" <<'PY'
+from pathlib import Path
+import datetime
+import json
+import subprocess
+import sys
+repo, iso = Path(sys.argv[1]), Path(sys.argv[2])
+try:
+    commit = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], stderr=subprocess.DEVNULL, text=True).strip()
+except subprocess.CalledProcessError:
+    commit = None
+manifest = {
+    'version': '11.1', 'channel': sys.argv[3], 'architecture': 'x86_64',
+    'installer_included': sys.argv[4] == '1', 'filename': iso.name,
+    'bytes': iso.stat().st_size,
+    'sha256': Path(str(iso) + '.sha256').read_text().split()[0],
+    'source_commit': commit,
+    'built_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'package_inventory': 'packages.x86_64.txt',
+    'recommended_rufus_mode': 'ISO Image mode', 'secure_boot_supported': False,
+}
+(iso.parent / 'build-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+PY
 printf 'Built %s\n' "$iso"
