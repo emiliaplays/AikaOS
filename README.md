@@ -5,6 +5,8 @@
 <p align="center">11.1 · x86_64 · Calamares · KDE Plasma · Custom GRUB</p>
 <p align="center"><a href="https://github.com/emiliaplays/AikaOS/releases/tag/v11.1">Download 11.1</a> · <a href="releases/11.1/RELEASE_NOTES.md">Release notes</a> · <a href="docs/INSTALLING.md">Install with Rufus</a> · <a href="docs/VERIFYING.md">Verify an image</a> · <a href="docs/INSTALLER.md">Build from source</a> · <a href="https://github.com/emiliaplays/AikaOS/issues">Report a bug</a></p>
 
+<p align="center"><a href="https://github.com/emiliaplays/AikaOS-mini"><strong>AikaOS Mini CD Edition 💿</strong></a> — a lightweight live edition with Firefox ESR that fits on a 700 MB CD.</p>
+
 ![AikaOS desktop](docs/screenshots/desktop.png)
 
 ## Meet AikaOS 11.1
